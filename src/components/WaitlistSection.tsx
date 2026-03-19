@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { CheckIcon } from './Icons';
+import { SignupCounter } from './SignupCounter';
 
 type FormState = 'idle' | 'submitting' | 'submitted' | 'error';
 
@@ -152,9 +153,9 @@ export function WaitlistSection() {
           />
         </div>
 
-        <p className="mt-12 text-center text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">
-          All submissions are securely stored
-        </p>
+        <div className="mt-12 flex justify-center">
+          <SignupCounter />
+        </div>
       </div>
     </section>
   );
