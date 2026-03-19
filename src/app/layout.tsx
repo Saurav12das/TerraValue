@@ -6,7 +6,7 @@ import { Footer } from '../components/Footer';
 export const metadata: Metadata = {
   title: 'TerraValue — Natural Capital Infrastructure for Agriculture',
   description:
-    'TerraValue helps quantify and translate soil, water, biodiversity, and productivity outcomes into decision-ready and monetizable insights. Financial and decision infrastructure for natural capital in agriculture.',
+    'TerraValue frames agriculture as the meeting point of purpose, carbon, and water intelligence, translating ecosystem performance into decision-ready and finance-ready value.',
   keywords: [
     'ecosystem services',
     'natural capital',
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>

@@ -11,14 +11,14 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/60 glass">
+    <header className="sticky top-0 z-50 border-b border-stone-200/80 glass">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-700 to-teal-600 shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-700 to-teal-600 shadow-sm">
             <span className="text-sm font-black text-white tracking-tight">TV</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-emerald-800 transition-colors">
+          <span className="text-2xl tracking-tight text-slate-900 transition-colors group-hover:text-emerald-800 [font-family:var(--font-display)]">
             {brand.name}
           </span>
         </Link>
@@ -53,9 +53,9 @@ export function Navbar() {
           </Link>
           <Link
             href="/#waitlist"
-            className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-800"
+            className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-800"
           >
-            Join Waitlist
+            Start Conversation
           </Link>
         </div>
 
@@ -100,9 +100,9 @@ export function Navbar() {
             <Link
               href="/#waitlist"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg bg-emerald-700 px-4 py-2.5 text-center text-sm font-semibold text-white"
+              className="rounded-full bg-emerald-700 px-4 py-2.5 text-center text-sm font-semibold text-white"
             >
-              Join Waitlist
+              Start Conversation
             </Link>
           </div>
         </div>
