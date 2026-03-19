@@ -11,12 +11,23 @@ import {
 } from '../data/scenarios';
 import { scoreScenario, scoreLabel, scoreBarColor } from '../lib/model/scoring';
 import { ScoreBar } from './ScoreBar';
+import { RadarChart } from './RadarChart';
+import { ProgressRing } from './ProgressRing';
+import { Tabs } from './Tabs';
 import { CarbonIcon, WaterIcon, BiodiversityIcon, ResilienceIcon, EconomicsIcon } from './Icons';
+
+const dimensionMeta = [
+  { key: 'carbon' as const, label: 'Soil Carbon', icon: <CarbonIcon size={18} />, color: '#7d5d41' },
+  { key: 'water' as const, label: 'Water Quality', icon: <WaterIcon size={18} />, color: '#0ea5e9' },
+  { key: 'biodiversity' as const, label: 'Biodiversity', icon: <BiodiversityIcon size={18} />, color: '#22c55e' },
+  { key: 'resilience' as const, label: 'Yield Resilience', icon: <ResilienceIcon size={18} />, color: '#f59e0b' },
+  { key: 'economics' as const, label: 'Economic ROI', icon: <EconomicsIcon size={18} />, color: '#8b5cf6' },
+];
 
 export function DashboardClient() {
   const [input, setInput] = useState<ScenarioInput>(presetScenarios[1]);
   const [compareIdx, setCompareIdx] = useState<number | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
+  const [activeDetailTab, setActiveDetailTab] = useState<string>('radar');
 
   const result = useMemo(() => scoreScenario(input), [input]);
   const compareResult = useMemo(
@@ -32,367 +43,458 @@ export function DashboardClient() {
     setInput((prev) => ({ ...prev, [key]: value }));
   }
 
+  const radarValues = dimensionMeta.map((d) => ({ label: d.label, value: result[d.key] }));
+  const compareRadarValues = compareResult
+    ? dimensionMeta.map((d) => ({ label: d.label, value: compareResult[d.key] }))
+    : undefined;
+
   return (
-    <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
-      {/* ──────────── Left Panel: Inputs ──────────── */}
-      <aside className="space-y-4">
-        {/* Preset selector */}
+    <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
+      {/* ──────────── Left Panel ──────────── */}
+      <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
+        {/* Preset */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="text-base font-bold text-slate-900">Scenario Inputs</h2>
           <p className="mt-1 text-xs text-slate-400">Adjust parameters to simulate ecosystem outcomes.</p>
 
-          <label className="mt-5 block">
-            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Preset Scenario</span>
-            <select
-              className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm text-slate-800 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-              onChange={(e) => setInput(presetScenarios[Number(e.target.value)])}
-              defaultValue={1}
-            >
-              {presetScenarios.map((s, i) => (
-                <option key={s.name} value={i}>{s.name}</option>
-              ))}
-            </select>
-          </label>
+          <SelectField
+            label="Preset Scenario"
+            value={presetScenarios.indexOf(input).toString()}
+            onChange={(v) => setInput(presetScenarios[Number(v)])}
+            options={presetScenarios.map((s, i) => ({ value: i.toString(), label: s.name }))}
+          />
         </div>
 
-        {/* Management choices */}
+        {/* Management */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Management Practices</h3>
+          <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">Management Practices</h3>
 
-          <label className="mt-4 block">
-            <span className="text-sm font-medium text-slate-700">Tillage</span>
-            <select
-              value={input.tillage}
-              onChange={(e) => updateInput('tillage', e.target.value as ScenarioInput['tillage'])}
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-            >
-              {tillageOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-          </label>
-
-          <label className="mt-3 block">
-            <span className="text-sm font-medium text-slate-700">Cover Crops</span>
-            <select
-              value={input.coverCrop}
-              onChange={(e) => updateInput('coverCrop', e.target.value as ScenarioInput['coverCrop'])}
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-            >
-              {coverCropOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-          </label>
-
-          <label className="mt-3 block">
-            <span className="text-sm font-medium text-slate-700">Nutrient Strategy</span>
-            <select
-              value={input.nutrient}
-              onChange={(e) => updateInput('nutrient', e.target.value as ScenarioInput['nutrient'])}
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-            >
-              {nutrientOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-          </label>
+          <SelectField label="Tillage" value={input.tillage}
+            onChange={(v) => updateInput('tillage', v as ScenarioInput['tillage'])}
+            options={tillageOptions.map((o) => ({ value: o.value, label: o.label }))}
+          />
+          <SelectField label="Cover Crops" value={input.coverCrop}
+            onChange={(v) => updateInput('coverCrop', v as ScenarioInput['coverCrop'])}
+            options={coverCropOptions.map((o) => ({ value: o.value, label: o.label }))}
+          />
+          <SelectField label="Nutrient Strategy" value={input.nutrient}
+            onChange={(v) => updateInput('nutrient', v as ScenarioInput['nutrient'])}
+            options={nutrientOptions.map((o) => ({ value: o.value, label: o.label }))}
+          />
         </div>
 
-        {/* Field characteristics */}
+        {/* Field */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">Field Characteristics</h3>
+          <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">Field Characteristics</h3>
 
-          <label className="mt-4 block">
-            <div className="flex items-baseline justify-between">
-              <span className="text-sm font-medium text-slate-700">Rotation Diversity</span>
-              <span className="text-sm font-bold text-emerald-700">{input.rotationDiversity}/5</span>
-            </div>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              value={input.rotationDiversity}
-              onChange={(e) => updateInput('rotationDiversity', Number(e.target.value))}
-              className="mt-2 w-full accent-emerald-600"
-            />
-            <div className="flex justify-between text-xs text-slate-400">
-              <span>Monoculture</span><span>High diversity</span>
-            </div>
-          </label>
+          <RangeField label="Rotation Diversity" value={input.rotationDiversity} min={1} max={5}
+            onChange={(v) => updateInput('rotationDiversity', v)}
+            leftLabel="Mono" rightLabel="High"
+            displayValue={`${input.rotationDiversity}/5`}
+            accentColor="var(--color-terra-600)"
+          />
+          <RangeField label="Slope Risk" value={input.slopeRisk} min={1} max={5}
+            onChange={(v) => updateInput('slopeRisk', v)}
+            leftLabel="Flat" rightLabel="Steep"
+            displayValue={`${input.slopeRisk}/5`}
+            accentColor="#f59e0b"
+          />
+          <RangeField label="Soil Organic Matter" value={Math.round(input.soilOrganicMatter * 10)} min={10} max={60}
+            onChange={(v) => updateInput('soilOrganicMatter', v / 10)}
+            leftLabel="1.0%" rightLabel="6.0%"
+            displayValue={`${input.soilOrganicMatter}%`}
+            accentColor="var(--color-terra-600)"
+          />
 
-          <label className="mt-4 block">
-            <div className="flex items-baseline justify-between">
-              <span className="text-sm font-medium text-slate-700">Slope Risk</span>
-              <span className="text-sm font-bold text-amber-600">{input.slopeRisk}/5</span>
-            </div>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              value={input.slopeRisk}
-              onChange={(e) => updateInput('slopeRisk', Number(e.target.value))}
-              className="mt-2 w-full accent-amber-500"
-            />
-            <div className="flex justify-between text-xs text-slate-400">
-              <span>Flat</span><span>Steep</span>
-            </div>
-          </label>
+          <SelectField label="Field Size" value={input.fieldSize}
+            onChange={(v) => updateInput('fieldSize', v as ScenarioInput['fieldSize'])}
+            options={fieldSizeOptions.map((o) => ({ value: o.value, label: o.label }))}
+          />
 
-          <label className="mt-4 block">
-            <div className="flex items-baseline justify-between">
-              <span className="text-sm font-medium text-slate-700">Soil Organic Matter</span>
-              <span className="text-sm font-bold text-emerald-700">{input.soilOrganicMatter}%</span>
+          <label className="mt-4 flex items-center gap-3 cursor-pointer group">
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={input.irrigated}
+                onChange={(e) => updateInput('irrigated', e.target.checked)}
+                className="peer sr-only"
+              />
+              <div className="h-6 w-11 rounded-full bg-slate-200 peer-checked:bg-emerald-500 transition-colors" />
+              <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm peer-checked:translate-x-5 transition-transform" />
             </div>
-            <input
-              type="range"
-              min={10}
-              max={60}
-              step={1}
-              value={Math.round(input.soilOrganicMatter * 10)}
-              onChange={(e) => updateInput('soilOrganicMatter', Number(e.target.value) / 10)}
-              className="mt-2 w-full accent-emerald-600"
-            />
-            <div className="flex justify-between text-xs text-slate-400">
-              <span>1.0%</span><span>6.0%</span>
-            </div>
-          </label>
-
-          <label className="mt-4 block">
-            <span className="text-sm font-medium text-slate-700">Field Size</span>
-            <select
-              value={input.fieldSize}
-              onChange={(e) => updateInput('fieldSize', e.target.value as ScenarioInput['fieldSize'])}
-              className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-            >
-              {fieldSizeOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-          </label>
-
-          <label className="mt-4 flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={input.irrigated}
-              onChange={(e) => updateInput('irrigated', e.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600"
-            />
             <span className="text-sm font-medium text-slate-700">Irrigated</span>
           </label>
         </div>
+
+        {/* Compare */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">Compare Scenario</h3>
+          <select
+            className="mt-3 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+            onChange={(e) => setCompareIdx(e.target.value === '' ? null : Number(e.target.value))}
+            value={compareIdx ?? ''}
+          >
+            <option value="">None</option>
+            {presetScenarios.map((s, i) => <option key={s.name} value={i}>{s.name}</option>)}
+          </select>
+          {compareIdx !== null && (
+            <p className="mt-2 text-xs text-slate-400">
+              Comparison shown as dashed red on the radar chart.
+            </p>
+          )}
+        </div>
       </aside>
 
-      {/* ──────────── Main Panel: Results ──────────── */}
+      {/* ──────────── Main Panel ──────────── */}
       <section className="space-y-5">
-        {/* TerraValue Score Hero */}
-        <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-6 shadow-sm">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        {/* Hero Score */}
+        <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-7 shadow-sm">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
+          <div className="relative flex flex-wrap items-center justify-between gap-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">TerraValue Score</p>
-              <div className="mt-1 flex items-baseline gap-2">
-                <span className="animate-count-up text-5xl font-extrabold text-emerald-800">
+              <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse-soft" />
+                TerraValue Score
+              </p>
+              <div className="mt-2 flex items-baseline gap-2">
+                <span className="text-6xl font-extrabold text-emerald-800 tabular-nums" key={result.terraValueScore}>
                   {result.terraValueScore}
                 </span>
-                <span className="text-lg text-slate-400">/ 100</span>
+                <span className="text-xl text-slate-400">/ 100</span>
               </div>
               <p className="mt-1 text-sm text-slate-500">
-                Integrated ecosystem performance: <strong className="text-emerald-700">{scoreLabel(result.terraValueScore)}</strong>
+                Integrated performance: <strong className={`${result.terraValueScore >= 65 ? 'text-emerald-600' : result.terraValueScore >= 50 ? 'text-amber-600' : 'text-red-500'}`}>{scoreLabel(result.terraValueScore)}</strong>
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700">Est. Ecosystem Value</p>
-              <p className="mt-1 text-4xl font-extrabold text-emerald-800">${result.ecosystemValuePotentialUsdAcre}</p>
-              <p className="text-sm text-slate-400">per acre / year</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Sub-scores */}
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-          {[
-            { key: 'carbon' as const, label: 'Soil Carbon', icon: <CarbonIcon size={18} />, score: result.carbon },
-            { key: 'water' as const, label: 'Water Quality', icon: <WaterIcon size={18} />, score: result.water },
-            { key: 'biodiversity' as const, label: 'Biodiversity', icon: <BiodiversityIcon size={18} />, score: result.biodiversity },
-            { key: 'resilience' as const, label: 'Yield Resilience', icon: <ResilienceIcon size={18} />, score: result.resilience },
-            { key: 'economics' as const, label: 'Economic ROI', icon: <EconomicsIcon size={18} />, score: result.economics },
-          ].map((metric) => (
-            <div key={metric.key} className="card-hover rounded-xl border border-slate-200 bg-white p-4">
-              <div className="flex items-center gap-2 text-slate-500">
-                {metric.icon}
-                <span className="text-xs font-medium">{metric.label}</span>
-              </div>
-              <p className="mt-2 text-2xl font-bold text-slate-900">{metric.score}<span className="text-sm text-slate-400"> / 100</span></p>
-              <div className="mt-2">
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div className={`h-2 bar-fill rounded-full ${scoreBarColor(metric.score)}`} style={{ width: `${metric.score}%` }} />
-                </div>
-              </div>
-              <p className="mt-1 text-xs text-slate-400">{scoreLabel(metric.score)}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Score Details Toggle */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            className="flex w-full items-center justify-between text-left"
-          >
-            <h3 className="text-sm font-bold text-slate-900">Score Breakdown Details</h3>
-            <span className={`text-xs font-medium text-emerald-600 transition-transform ${showDetails ? 'rotate-180' : ''}`}>
-              {showDetails ? 'Hide' : 'Show'} Details
-            </span>
-          </button>
-          {showDetails && (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade-in">
-              {(['carbon', 'water', 'biodiversity', 'resilience', 'economics'] as const).map((key) => (
-                <div key={key} className="rounded-lg border border-slate-100 bg-slate-50/50 p-3">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500 capitalize">{key}</p>
-                  <ul className="mt-2 space-y-1">
-                    {result.details[key].map((line, i) => (
-                      <li key={i} className="text-xs text-slate-500 font-mono">{line}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Detailed Score Bars */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-bold text-slate-900">Performance Breakdown</h3>
-          <div className="mt-5 space-y-4">
-            <ScoreBar label="Soil Carbon Potential" score={result.carbon} />
-            <ScoreBar label="Water Quality Impact" score={result.water} />
-            <ScoreBar label="Biodiversity Score" score={result.biodiversity} />
-            <ScoreBar label="Yield Resilience" score={result.resilience} />
-            <ScoreBar label="Economic ROI" score={result.economics} />
-          </div>
-        </div>
-
-        {/* Monetization Panel */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-900">Monetization Opportunities</h3>
-            <p className="mt-1 text-xs text-slate-400">Estimated annual potential per acre (demo values)</p>
-            <div className="mt-4 space-y-3">
-              {[
-                { label: 'Carbon credit programs', value: result.monetization.carbonCredits, color: 'bg-amber-800' },
-                { label: 'Water quality incentives', value: result.monetization.waterIncentives, color: 'bg-sky-500' },
-                { label: 'Biodiversity contracts', value: result.monetization.biodiversityContracts, color: 'bg-emerald-500' },
-                { label: 'Sustainability premium', value: result.monetization.sustainabilityPremium, color: 'bg-violet-500' },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
-                    <span className="text-sm text-slate-600">{item.label}</span>
-                  </div>
-                  <span className="text-sm font-bold text-slate-900">${item.value}/ac</span>
-                </div>
-              ))}
-              <div className="border-t border-slate-200 pt-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-slate-900">Total Potential</span>
-                  <span className="text-lg font-extrabold text-emerald-700">${result.monetization.total}/ac</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-900">Summary Valuation</h3>
-            <div className="mt-4 flex flex-col items-center justify-center py-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Combined Ecosystem Value</p>
-              <p className="mt-2 text-5xl font-extrabold text-emerald-700">${result.ecosystemValuePotentialUsdAcre}</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">Est. Ecosystem Value</p>
+              <p className="mt-2 text-5xl font-extrabold text-emerald-800 tabular-nums">${result.ecosystemValuePotentialUsdAcre}</p>
               <p className="mt-1 text-sm text-slate-400">per acre / year</p>
-              <div className="mt-4 flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5">
-                <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse-soft" />
-                <span className="text-xs font-medium text-emerald-700">Demo estimate — placeholder model</span>
-              </div>
-            </div>
-            <div className="mt-4 rounded-lg bg-slate-50 p-3">
-              <p className="text-xs text-slate-400 leading-relaxed">
-                This value integrates carbon, water, biodiversity, resilience, and economic
-                scoring. Real valuations will use validated scientific models and market data.
-              </p>
             </div>
           </div>
         </div>
 
-        {/* Scenario Comparison */}
+        {/* Visualization Tabs: Radar / Rings / Bars */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900">Scenario Comparison</h3>
-            <select
-              className="rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-1.5 text-xs focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
-              onChange={(e) => setCompareIdx(e.target.value === '' ? null : Number(e.target.value))}
-              value={compareIdx ?? ''}
-            >
-              <option value="">Compare with...</option>
-              {presetScenarios.map((s, i) => (
-                <option key={s.name} value={i}>{s.name}</option>
-              ))}
-            </select>
-          </div>
+          <Tabs
+            variant="pills"
+            defaultTab="radar"
+            tabs={[
+              {
+                id: 'radar',
+                label: 'Radar View',
+                content: (
+                  <div className="flex justify-center py-4">
+                    <RadarChart
+                      values={radarValues}
+                      compareValues={compareRadarValues}
+                      size={320}
+                    />
+                  </div>
+                ),
+              },
+              {
+                id: 'rings',
+                label: 'Gauge View',
+                content: (
+                  <div className="flex flex-wrap justify-center gap-6 py-6">
+                    {dimensionMeta.map((d) => (
+                      <ProgressRing
+                        key={d.key}
+                        value={result[d.key]}
+                        label={d.label}
+                        color={d.color}
+                        size={120}
+                        strokeWidth={8}
+                      />
+                    ))}
+                  </div>
+                ),
+              },
+              {
+                id: 'bars',
+                label: 'Bar View',
+                content: (
+                  <div className="space-y-4 py-4">
+                    {dimensionMeta.map((d) => (
+                      <ScoreBar key={d.key} label={d.label} score={result[d.key]} />
+                    ))}
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
 
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {allScenarios.map((scenario) => (
-              <div
-                key={scenario.name}
-                className={`rounded-xl border p-4 transition-all ${
-                  scenario.name === input.name
-                    ? 'border-emerald-300 bg-emerald-50/60 ring-1 ring-emerald-200'
-                    : 'border-slate-200 bg-white'
-                }`}
-              >
-                <p className="text-xs font-medium text-slate-500">{scenario.name}</p>
-                <p className="mt-1 text-2xl font-extrabold text-slate-900">
-                  {scenario.terraValueScore}<span className="text-sm text-slate-400"> / 100</span>
-                </p>
-                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+        {/* Sub-score Cards */}
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          {dimensionMeta.map((d) => {
+            const score = result[d.key];
+            const diff = compareResult ? score - compareResult[d.key] : null;
+            return (
+              <div key={d.key} className="card-hover rounded-xl border border-slate-200 bg-white p-4 group">
+                <div className="flex items-center gap-2 text-slate-400 group-hover:text-slate-600 transition-colors">
+                  {d.icon}
+                  <span className="text-xs font-medium">{d.label}</span>
+                </div>
+                <div className="mt-2 flex items-baseline gap-1.5">
+                  <span className="text-2xl font-extrabold text-slate-900 tabular-nums">{score}</span>
+                  <span className="text-xs text-slate-400">/ 100</span>
+                  {diff !== null && diff !== 0 && (
+                    <span className={`ml-1 text-xs font-bold ${diff > 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+                      {diff > 0 ? '+' : ''}{diff}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-2.5 h-2 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
-                    className={`h-2 bar-fill rounded-full ${scoreBarColor(scenario.terraValueScore)}`}
-                    style={{ width: `${scenario.terraValueScore}%` }}
+                    className={`h-2 bar-fill rounded-full ${scoreBarColor(score)}`}
+                    style={{ width: `${score}%` }}
                   />
                 </div>
-                <p className="mt-1.5 text-xs text-slate-400">${scenario.ecosystemValuePotentialUsdAcre}/acre/yr</p>
+                <p className="mt-1.5 text-[10px] text-slate-400 font-medium">{scoreLabel(score)}</p>
               </div>
-            ))}
-          </div>
-
-          {/* Side-by-side comparison */}
-          {compareResult && compareIdx !== null && (
-            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50/50 p-5 animate-fade-in">
-              <h4 className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                Current vs. {presetScenarios[compareIdx].name}
-              </h4>
-              <div className="mt-4 space-y-3">
-                {(['carbon', 'water', 'biodiversity', 'resilience', 'economics'] as const).map((key) => {
-                  const diff = result[key] - compareResult[key];
-                  return (
-                    <div key={key} className="flex items-center gap-4">
-                      <span className="w-28 text-xs font-medium capitalize text-slate-600">{key}</span>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-bold text-slate-900">{result[key]}</span>
-                          <span className="text-xs text-slate-400">vs</span>
-                          <span className="text-sm text-slate-500">{compareResult[key]}</span>
-                          <span className={`text-xs font-bold ${diff > 0 ? 'text-emerald-600' : diff < 0 ? 'text-red-500' : 'text-slate-400'}`}>
-                            {diff > 0 ? '+' : ''}{diff}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+            );
+          })}
         </div>
+
+        {/* Score Details */}
+        <ScoreDetails result={result} />
+
+        {/* Monetization + Valuation */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <MonetizationPanel result={result} />
+          <ValuationPanel result={result} />
+        </div>
+
+        {/* Scenario Comparison Grid */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="text-sm font-bold text-slate-900">Scenario Comparison</h3>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {allScenarios.map((s) => {
+              const isActive = s.name === input.name;
+              return (
+                <div
+                  key={s.name}
+                  onClick={() => {
+                    const idx = presetScenarios.findIndex((p) => p.name === s.name);
+                    if (idx >= 0) setInput(presetScenarios[idx]);
+                  }}
+                  className={`card-interactive rounded-xl border p-5 cursor-pointer ${
+                    isActive ? 'border-emerald-300 bg-emerald-50/60 ring-2 ring-emerald-200' : 'border-slate-200 bg-white'
+                  }`}
+                >
+                  <p className="text-xs font-medium text-slate-500">{s.name}</p>
+                  <div className="mt-2 flex items-baseline gap-1">
+                    <span className="text-3xl font-extrabold text-slate-900 tabular-nums">{s.terraValueScore}</span>
+                    <span className="text-sm text-slate-400">/ 100</span>
+                  </div>
+                  <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                    <div
+                      className={`h-2 bar-fill rounded-full ${scoreBarColor(s.terraValueScore)}`}
+                      style={{ width: `${s.terraValueScore}%` }}
+                    />
+                  </div>
+                  <p className="mt-2 text-xs text-slate-400 tabular-nums">${s.ecosystemValuePotentialUsdAcre}/ac/yr</p>
+                  {isActive && <p className="mt-1 text-[10px] font-semibold text-emerald-600">Currently viewing</p>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Side-by-side comparison */}
+        {compareResult && compareIdx !== null && (
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm animate-slide-up-fade">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400">
+              Detailed Comparison: Current vs {presetScenarios[compareIdx].name}
+            </h4>
+            <div className="mt-5 overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-100">
+                    <th className="text-left py-2 text-xs font-medium text-slate-400">Dimension</th>
+                    <th className="text-right py-2 text-xs font-medium text-slate-400">Current</th>
+                    <th className="text-right py-2 text-xs font-medium text-slate-400">Compare</th>
+                    <th className="text-right py-2 text-xs font-medium text-slate-400">Diff</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dimensionMeta.map((d) => {
+                    const diff = result[d.key] - compareResult[d.key];
+                    return (
+                      <tr key={d.key} className="border-b border-slate-50 last:border-0">
+                        <td className="py-2.5 font-medium text-slate-700">{d.label}</td>
+                        <td className="py-2.5 text-right font-bold text-slate-900 tabular-nums">{result[d.key]}</td>
+                        <td className="py-2.5 text-right text-slate-500 tabular-nums">{compareResult[d.key]}</td>
+                        <td className={`py-2.5 text-right font-bold tabular-nums ${diff > 0 ? 'text-emerald-500' : diff < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                          {diff > 0 ? '+' : ''}{diff}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <tr className="border-t border-slate-200">
+                    <td className="py-2.5 font-bold text-slate-900">TerraValue Score</td>
+                    <td className="py-2.5 text-right font-extrabold text-emerald-700 tabular-nums">{result.terraValueScore}</td>
+                    <td className="py-2.5 text-right text-slate-500 tabular-nums">{compareResult.terraValueScore}</td>
+                    <td className={`py-2.5 text-right font-extrabold tabular-nums ${(result.terraValueScore - compareResult.terraValueScore) > 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+                      {result.terraValueScore - compareResult.terraValueScore > 0 ? '+' : ''}{result.terraValueScore - compareResult.terraValueScore}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
         {/* Disclaimer */}
         <div className="rounded-xl border border-amber-200/60 bg-amber-50/40 p-4">
           <p className="text-xs text-amber-700 leading-relaxed">
-            <strong>Prototype Notice:</strong> This dashboard uses simplified placeholder scoring logic for
-            demonstration purposes. All values, weights, and estimates are illustrative. Future versions
-            will integrate validated scientific models, real geospatial data, and market-calibrated valuations.
+            <strong>Prototype Notice:</strong> This dashboard uses simplified placeholder scoring for
+            demonstration. All values and estimates are illustrative. Future versions
+            will integrate validated scientific models and market-calibrated valuations.
           </p>
         </div>
       </section>
+    </div>
+  );
+}
+
+/* ────────────── Sub-components ────────────── */
+
+function SelectField({ label, value, onChange, options }: {
+  label: string; value: string; onChange: (v: string) => void; options: { value: string; label: string }[];
+}) {
+  return (
+    <label className="mt-4 block">
+      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm text-slate-800 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100 transition-all"
+      >
+        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+    </label>
+  );
+}
+
+function RangeField({ label, value, min, max, onChange, leftLabel, rightLabel, displayValue, accentColor }: {
+  label: string; value: number; min: number; max: number; onChange: (v: number) => void;
+  leftLabel: string; rightLabel: string; displayValue: string; accentColor: string;
+}) {
+  return (
+    <label className="mt-5 block">
+      <div className="flex items-baseline justify-between">
+        <span className="text-sm font-medium text-slate-700">{label}</span>
+        <span className="text-sm font-bold" style={{ color: accentColor }}>{displayValue}</span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="mt-2 w-full"
+      />
+      <div className="flex justify-between text-[10px] text-slate-400 mt-0.5">
+        <span>{leftLabel}</span><span>{rightLabel}</span>
+      </div>
+    </label>
+  );
+}
+
+function ScoreDetails({ result }: { result: ReturnType<typeof scoreScenario> }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <button onClick={() => setOpen(!open)} className="flex w-full items-center justify-between text-left group">
+        <h3 className="text-sm font-bold text-slate-900">Score Breakdown Details</h3>
+        <span className={`text-xs font-semibold text-emerald-600 transition-transform ${open ? 'rotate-180' : ''}`}>
+          {open ? 'Hide' : 'Show'} Details
+        </span>
+      </button>
+      {open && (
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-slide-up-fade">
+          {(['carbon', 'water', 'biodiversity', 'resilience', 'economics'] as const).map((key) => {
+            const meta = dimensionMeta.find((d) => d.key === key)!;
+            return (
+              <div key={key} className="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: meta.color }} />
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-500">{key}</p>
+                </div>
+                <ul className="mt-2.5 space-y-1">
+                  {result.details[key].map((line, i) => (
+                    <li key={i} className="text-xs text-slate-500 font-mono">{line}</li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MonetizationPanel({ result }: { result: ReturnType<typeof scoreScenario> }) {
+  const items = [
+    { label: 'Carbon credit programs', value: result.monetization.carbonCredits, color: 'bg-amber-800' },
+    { label: 'Water quality incentives', value: result.monetization.waterIncentives, color: 'bg-sky-500' },
+    { label: 'Biodiversity contracts', value: result.monetization.biodiversityContracts, color: 'bg-emerald-500' },
+    { label: 'Sustainability premium', value: result.monetization.sustainabilityPremium, color: 'bg-violet-500' },
+  ];
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <h3 className="text-sm font-bold text-slate-900">Monetization Opportunities</h3>
+      <p className="mt-1 text-xs text-slate-400">Est. annual potential per acre (demo)</p>
+      <div className="mt-5 space-y-3.5">
+        {items.map((item) => (
+          <div key={item.label}>
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <div className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
+                <span className="text-sm text-slate-600">{item.label}</span>
+              </div>
+              <span className="text-sm font-bold text-slate-900 tabular-nums">${item.value}/ac</span>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+              <div
+                className={`h-1.5 rounded-full bar-fill ${item.color}`}
+                style={{ width: `${Math.min(100, item.value * 2)}%` }}
+              />
+            </div>
+          </div>
+        ))}
+        <div className="border-t border-slate-200 pt-3.5 flex items-center justify-between">
+          <span className="text-sm font-bold text-slate-900">Total Potential</span>
+          <span className="text-xl font-extrabold text-emerald-700 tabular-nums">${result.monetization.total}/ac</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ValuationPanel({ result }: { result: ReturnType<typeof scoreScenario> }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm flex flex-col">
+      <h3 className="text-sm font-bold text-slate-900">Summary Valuation</h3>
+      <div className="flex-1 flex flex-col items-center justify-center py-6">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Combined Ecosystem Value</p>
+        <p className="mt-3 text-6xl font-extrabold text-emerald-700 tabular-nums">${result.ecosystemValuePotentialUsdAcre}</p>
+        <p className="mt-1 text-sm text-slate-400">per acre / year</p>
+        <div className="mt-5 flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5">
+          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse-soft" />
+          <span className="text-xs font-medium text-emerald-700">Demo estimate — placeholder model</span>
+        </div>
+      </div>
+      <div className="rounded-xl bg-slate-50 p-3.5 mt-auto">
+        <p className="text-xs text-slate-400 leading-relaxed">
+          Integrates all five scoring dimensions. Real valuations will use validated models and market data.
+        </p>
+      </div>
     </div>
   );
 }
