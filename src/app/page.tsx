@@ -1,9 +1,12 @@
 import Link from 'next/link';
+import { MissionSystemGraphic } from '../components/MissionSystemGraphic';
 import { Section } from '../components/Section';
 import { WaitlistSection } from '../components/WaitlistSection';
 import {
   brand,
   marketGaps,
+  missionOutcomes,
+  missionPrinciples,
   proofPoints,
   supportingSignals,
   thesisPillars,
@@ -78,9 +81,47 @@ export default function HomePage() {
               />
               <InsightCard
                 title="For the brand"
-                body="Lead with conviction: markets price fragments today, while TerraValue is being designed to price systems."
+                body="Lead with conviction and care: TerraValue exists to serve farmers, strengthen communities, and make environmental value legible."
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
+        <div className="rounded-[2rem] border border-stone-200 bg-white/88 p-6 shadow-sm sm:p-8 lg:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-700">Mission before market</p>
+          <h2 className="mt-3 text-3xl leading-tight tracking-tight text-slate-950 sm:text-4xl [font-family:var(--font-display)]">
+            Investors should feel that the ambition is commercial, but the intent is deeply human.
+          </h2>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            If this is a vision site, then we should say clearly that TerraValue is not trying to financialize land
+            from a distance. It is trying to build better intelligence for the people and ecosystems agriculture already
+            holds together.
+          </p>
+
+          <div className="mt-7 grid gap-4">
+            {missionPrinciples.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-[1.35rem] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbfcf8_100%)] p-5"
+              >
+                <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <MissionSystemGraphic />
+          <div className="grid gap-3 sm:grid-cols-3">
+            {missionOutcomes.map((item) => (
+              <article key={item.title} className="rounded-[1.35rem] border border-stone-200 bg-white/82 p-4 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{item.title}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{item.body}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>

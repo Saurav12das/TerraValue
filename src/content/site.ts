@@ -37,6 +37,39 @@ export const thesisPillars = [
   },
 ] as const;
 
+export const missionPrinciples = [
+  {
+    title: 'Farmer first',
+    body:
+      'The platform should help farmers see, defend, and capture the value they create instead of asking them to carry more complexity without reward.',
+  },
+  {
+    title: 'Community rooted',
+    body:
+      'Agriculture is local before it is global. Better decisions at the field level can strengthen regional resilience, shared water systems, and rural prosperity.',
+  },
+  {
+    title: 'Environment measured with care',
+    body:
+      'We want to make ecological improvement legible without flattening it. Carbon matters, but so do water, biodiversity, and long-term land health.',
+  },
+] as const;
+
+export const missionOutcomes = [
+  {
+    title: 'For farmers',
+    body: 'Turn stewardship into evidence, confidence, and new economic leverage.',
+  },
+  {
+    title: 'For communities',
+    body: 'Support stronger local water, food, and land systems through better intelligence.',
+  },
+  {
+    title: 'For the environment',
+    body: 'Translate living-system health into signals that markets and institutions can finally act on.',
+  },
+] as const;
+
 export const marketGaps = [
   {
     title: 'Carbon is priced. Systems are not.',
