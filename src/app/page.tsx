@@ -14,76 +14,87 @@ import {
 export default function HomePage() {
   return (
     <div className="space-y-24 lg:space-y-32">
-      {/* --- HERO SECTION --- */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden rounded-[2.5rem] bg-[#021810] px-6 py-12 text-white shadow-2xl sm:px-10 lg:px-16 animate-fade-in-up">
-        <div className="pointer-events-none absolute inset-0 mesh-gradient-dark opacity-80" />
-        <div className="pointer-events-none absolute inset-0 dot-grid-dark opacity-30 mask-image:linear-gradient(to_bottom,white,transparent)" />
-        
-        {/* Glow Orbs */}
+      {/* ═══════════════════════ HERO ═══════════════════════ */}
+      <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden rounded-[2.5rem] bg-[#021810] px-6 py-16 text-white shadow-2xl sm:px-10 lg:px-16 animate-fade-in-up">
+        <div className="pointer-events-none absolute inset-0 mesh-gradient-dark opacity-60" />
+        <div className="pointer-events-none absolute inset-0 dot-grid-dark opacity-20" />
         <div className="pointer-events-none absolute -left-20 top-0 h-64 w-64 rounded-full bg-emerald-500/10 blur-[100px]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 rounded-full bg-sky-500/10 blur-[120px]" />
-        
-        <div className="relative z-10 mx-auto max-w-5xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200 backdrop-blur-md animate-slide-up-fade">
+        <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 rounded-full bg-sky-500/8 blur-[120px]" />
+
+        <div className="relative z-10 mx-auto max-w-5xl">
+          {/* Urgency pill — the problem, not the brand */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-amber-500/30 bg-amber-500/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-amber-200/90 backdrop-blur-md animate-slide-up-fade">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
-            TerraValue Waitlist
+            $10 trillion in hidden costs. Zero infrastructure to fix it.
           </div>
-          
-          <h1 className="mt-8 text-5xl leading-[1.05] tracking-tight text-white sm:text-7xl lg:text-[5.5rem] [font-family:var(--font-display)] animate-slide-up-fade" style={{ animationDelay: '100ms' }}>
-            Agriculture is where <span className="text-gradient">humanity</span>, <span className="text-gradient-warm">climate</span>, and intelligence converge.
+
+          <h1 className="mt-10 text-[2.75rem] leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-[5rem] [font-family:var(--font-display)] animate-slide-up-fade" style={{ animationDelay: '100ms' }}>
+            Every year, farms create <span className="text-gradient">trillions</span> in value that no market can see.
           </h1>
-          
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-emerald-100/70 sm:text-xl animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
-            {brand.subheadline}
+
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-emerald-100/70 sm:text-xl animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
+            Soil health. Water filtration. Carbon sequestration. Biodiversity. Resilience against floods and drought.
+            <span className="block mt-3 text-white/90 font-medium">
+              Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
+            </span>
           </p>
 
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
-             {/* Glow Input Waitlist CTA */}
-            <form className="relative flex w-full max-w-md items-center glow-border rounded-full bg-[#042f1f]/50 p-1 backdrop-blur-md transition-transform hover:scale-[1.02]">
-               <input 
-                 type="email" 
-                 placeholder="Enter your email to join the waitlist..." 
-                 className="w-full bg-transparent px-5 py-3 text-sm text-white placeholder:text-emerald-200/50 focus:outline-none"
-                 required
-               />
-               <button type="submit" className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-[#021810] transition-colors hover:bg-emerald-400">
-                 Request Access
-               </button>
+          <div className="mt-12 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
+            <form className="relative flex w-full max-w-md items-center glow-border rounded-full bg-[#042f1f]/60 p-1 backdrop-blur-md transition-transform hover:scale-[1.01]">
+              <input
+                type="email"
+                placeholder="Your email — join the early build"
+                className="w-full bg-transparent px-5 py-3 text-sm text-white placeholder:text-emerald-200/40 focus:outline-none"
+                required
+              />
+              <button type="submit" className="shrink-0 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-[#021810] transition-colors hover:bg-emerald-400">
+                Join Waitlist
+              </button>
             </form>
+            <Link
+              href="#the-problem"
+              className="shrink-0 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white/80 transition hover:bg-white/5 hover:text-white"
+            >
+              See the problem ↓
+            </Link>
           </div>
-          
-          <div className="mt-16 flex flex-wrap justify-center gap-8 border-t border-emerald-500/10 pt-8 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
-             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-500/50 w-full mb-4">Backed by signals from</p>
-             {['World Bank', 'FAO', 'UNEP', 'IEA'].map(partner => (
-               <span key={partner} className="text-lg font-bold text-emerald-100/30 grayscale hover:grayscale-0 hover:text-emerald-200 transition-all duration-300">
-                 {partner}
-               </span>
-             ))}
+
+          {/* Research data bar */}
+          <div className="mt-20 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/8 pt-8 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-500/50">Backed by research data from</p>
+            {['World Bank', 'FAO', 'UNEP', 'IEA'].map(source => (
+              <span key={source} className="text-sm font-semibold text-emerald-100/25 hover:text-emerald-200/60 transition-colors duration-300 cursor-default">
+                {source}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* --- PROBLEM/SOLUTION SECTION (The Missing Market) --- */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div className="animate-slide-in-left">
-            <p className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-800">
-              The Missing Market
-            </p>
-            <h2 className="mt-6 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
-              Today&rsquo;s tools price fragments. <br />
-              <span className="text-emerald-700">TerraValue prices systems.</span>
+      {/* ═══════════════════════ THE PROBLEM ═══════════════════════ */}
+      <section id="the-problem" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600/80">The problem we exist to solve</p>
+            <h2 className="mt-5 text-4xl leading-[1.1] tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
+              Agriculture generates $4.49 trillion a year — and the most important value it creates is invisible.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              Most tools isolate one outcome—like carbon—while leaving water, biodiversity, resilience, and true operating performance off the balance sheet. 
-              We are turning scattered ecosystem outcomes into a unified decision, valuation, and finance layer.
+              A single farm can filter millions of gallons of water, sequester tons of carbon, and support hundreds of species. But there is no system that measures it, no market that prices it, and no financial product that rewards it.
             </p>
-            <blockquote className="mt-8 border-l-4 border-emerald-500 bg-emerald-50/50 p-6 rounded-r-2xl italic text-slate-700">
-              "TerraValue helps markets understand what farms actually create."
-            </blockquote>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              The result? <strong className="text-slate-900">Farmers bear the cost of stewardship while markets capture the benefits.</strong> Land health declines. Communities lose resilience. And trillions in ecosystem value stay off every balance sheet.
+            </p>
+
+            <div className="mt-10 rounded-2xl border-l-4 border-emerald-600 bg-emerald-50/60 p-6">
+              <p className="text-base leading-relaxed text-slate-800 font-medium italic">
+                &ldquo;FAO estimated at least $10 trillion a year in hidden agrifood costs. The valuation layer to address this does not exist yet. That is what we are building.&rdquo;
+              </p>
+              <p className="mt-3 text-xs font-bold uppercase tracking-widest text-slate-400">— TerraValue founding thesis</p>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 stagger-children">
@@ -92,164 +103,150 @@ export default function HomePage() {
                 key={item.title}
                 className="card-interactive glass rounded-[1.5rem] p-6 shadow-sm"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-100 to-sky-50 text-emerald-600 font-bold mb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-50 text-red-500/80 text-sm font-black mb-4">
                   0{idx + 1}
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{item.body}</p>
+                <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- PLATFORM VISION (What TerraValue Builds) BENTO GRID --- */}
+      {/* ═══════════════════════ WHAT WE'RE BUILDING ═══════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">What We Build</p>
+        <div className="max-w-3xl mb-14">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">What we&rsquo;re building to fix it</p>
           <h2 className="mt-4 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
-            A valuation engine for the living economy.
+            One platform to measure, value, and unlock what farms actually produce.
           </h2>
+          <p className="mt-4 text-lg text-slate-500 leading-relaxed">Five integrated layers. Each one solves a piece of the problem that no existing tool touches.</p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 auto-rows-[220px]">
-          {valueStreams.map((stream, idx) => {
-             // Create bento box spanning rules
-             const isLarge = idx === 0 || idx === 3;
-             const spanClass = isLarge ? 'md:col-span-2 lg:col-span-3 lg:row-span-2' : 'md:col-span-1 lg:col-span-2 lg:row-span-1';
-             
-             return (
-              <article
-                key={stream.key}
-                className={`group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:shadow-xl ${spanClass}`}
-              >
-                 <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                 
-                 <div className="relative z-10 flex flex-col h-full justify-between">
-                   <div className="flex items-center gap-4">
-                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl shadow-sm" style={{ backgroundColor: `${stream.color}20`, color: stream.color }}>
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                     </div>
-                     <h3 className="text-xl font-bold text-slate-900">{stream.title}</h3>
-                   </div>
-                   
-                   <p className="mt-6 text-sm leading-relaxed text-slate-600 max-w-sm">
-                     {stream.description}
-                   </p>
-                   
-                   <div className="mt-auto pt-6 flex w-full">
-                     <div className="h-1 rounded-full bar-fill w-8 group-hover:w-full" style={{ backgroundColor: stream.color }} />
-                   </div>
-                 </div>
-              </article>
-             );
-          })}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {valueStreams.map((stream) => (
+            <article
+              key={stream.key}
+              className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1"
+            >
+              <div className="flex items-center gap-4 mb-5">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: `${stream.color}15`, color: stream.color }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-slate-900">{stream.title}</h3>
+              </div>
+
+              <p className="text-sm leading-relaxed text-slate-500">{stream.description}</p>
+
+              <div className="mt-6 flex w-full">
+                <div className="h-1 rounded-full bar-fill w-6 group-hover:w-full transition-all duration-700" style={{ backgroundColor: stream.color }} />
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* --- MISSION SYSTEM GRAPHIC & HUMAN ELEMENT --- */}
+      {/* ═══════════════════════ WHY THIS MATTERS (Mission) ═══════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-         <div className="rounded-[2.5rem] bg-[#021810] p-8 sm:p-14 lg:p-20 text-white relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-3xl opacity-30">
-               <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/20 to-transparent blur-[100px]" />
-            </div>
-            
-            <div className="grid gap-16 lg:grid-cols-[1fr_1fr] items-center relative z-10">
-               <div>
-                  <p className="inline-flex rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Mission before market</p>
-                  <h2 className="mt-6 text-4xl leading-tight tracking-tight sm:text-5xl [font-family:var(--font-display)]">
-                    Investors should feel that the ambition is commercial, but the intent is deeply human.
-                  </h2>
-                  <p className="mt-6 text-lg leading-relaxed text-emerald-100/70">
-                    TerraValue is not trying to financialize land from a distance. It is trying to build better intelligence for the people and ecosystems agriculture already holds together.
-                  </p>
+        <div className="rounded-[2.5rem] bg-[#021810] p-8 sm:p-14 lg:p-20 text-white relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-3xl opacity-25">
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/20 to-transparent blur-[100px]" />
+          </div>
 
-                  <div className="mt-10 grid gap-6">
-                    {missionOutcomes.map((item) => (
-                      <div key={item.title} className="flex gap-4">
-                        <div className="mt-1 h-2 w-2 rounded-full bg-emerald-400 shrink-0" />
-                        <div>
-                           <h3 className="font-semibold text-white">{item.title}</h3>
-                           <p className="text-sm text-emerald-100/60 mt-1">{item.body}</p>
-                        </div>
-                      </div>
-                    ))}
+          <div className="grid gap-16 lg:grid-cols-[1fr_1fr] items-center relative z-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-400/80">Why we do this</p>
+              <h2 className="mt-6 text-3xl leading-tight tracking-tight sm:text-[2.75rem] sm:leading-[1.12] [font-family:var(--font-display)]">
+                We believe the people who feed the world should not be the last to benefit from what they create.
+              </h2>
+              <p className="mt-6 text-base leading-relaxed text-emerald-100/60">
+                TerraValue is not financializing land from a distance. We are building intelligence for the farmers, communities, and ecosystems that agriculture already holds together — so that stewardship becomes an economic strength, not a hidden cost.
+              </p>
+
+              <div className="mt-10 space-y-6">
+                {missionOutcomes.map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <div className="mt-2 h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-white">{item.title}</h3>
+                      <p className="text-sm text-emerald-100/50 mt-1 leading-relaxed">{item.body}</p>
+                    </div>
                   </div>
-               </div>
-
-               <div>
-                 <MissionSystemGraphic />
-               </div>
+                ))}
+              </div>
             </div>
-         </div>
+
+            <div>
+              <MissionSystemGraphic />
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* --- WHY NOW (Monolithic Stats) --- */}
+      {/* ═══════════════════════ THE EVIDENCE ═══════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">The Scale of the Opportunity</p>
+        <div className="max-w-3xl mb-14">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">The scale of the problem</p>
           <h2 className="mt-4 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
-            A multi-trillion-dollar system waiting for infrastructure.
+            This is not a niche. This is the largest unbuilt market on earth.
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 stagger-children">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4 stagger-children">
           {proofPoints.map((item) => (
             <article
               key={item.label}
-              className="group flex flex-col justify-between rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:border-emerald-200 hover:shadow-xl hover:-translate-y-1"
+              className="group flex flex-col justify-between rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-sm transition-all hover:border-emerald-200 hover:shadow-lg hover:-translate-y-1"
             >
               <div>
-                <p className="text-5xl font-bold text-slate-900 [font-family:var(--font-display)] tracking-tighter group-hover:text-emerald-700 transition-colors">{item.value}</p>
-                <h3 className="mt-4 text-base font-semibold text-slate-800">{item.label}</h3>
+                <p className="text-4xl font-bold text-slate-900 [font-family:var(--font-display)] tracking-tighter group-hover:text-emerald-700 transition-colors">{item.value}</p>
+                <h3 className="mt-3 text-sm font-semibold text-slate-800 leading-snug">{item.label}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-500">{item.detail}</p>
               </div>
               <a
                 href={item.sourceHref}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-emerald-600 hover:text-emerald-800 transition-colors"
+                className="mt-6 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-600 hover:text-emerald-800 transition-colors"
               >
                 {item.sourceLabel}
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
               </a>
             </article>
           ))}
         </div>
       </section>
 
-      {/* --- STUDIES AND GAPS --- */}
+      {/* ═══════════════════════ RESEARCH SIGNALS ═══════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-24">
         <div className="rounded-[2.5rem] bg-slate-50 p-8 sm:p-12 lg:p-16 border border-slate-200">
-           <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
-              <div>
-                 <h2 className="text-3xl leading-tight tracking-tight text-slate-900 sm:text-4xl [font-family:var(--font-display)]">
-                   Signals of exactly this coordination problem.
-                 </h2>
-                 <p className="mt-4 text-slate-600 leading-relaxed">
-                    These signals strengthen the case that TerraValue is entering a large, under-built coordination problem.
-                 </p>
-              </div>
-              <div className="grid gap-6 sm:grid-cols-2">
-                 {supportingSignals.map((item) => (
-                    <article key={item.title} className="glass rounded-[1.5rem] p-6">
-                       <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-                       <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.body}</p>
-                       <span className="mt-4 block text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-                         {item.sourceLabel}
-                       </span>
-                    </article>
-                 ))}
-              </div>
-           </div>
+          <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Independent research</p>
+              <h2 className="mt-4 text-3xl leading-tight tracking-tight text-slate-900 sm:text-4xl [font-family:var(--font-display)]">
+                The evidence says this coordination problem is real — and growing.
+              </h2>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {supportingSignals.map((item) => (
+                <article key={item.title} className="glass rounded-[1.5rem] p-6">
+                  <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.body}</p>
+                  <a href={item.sourceHref} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-600 hover:text-emerald-800 transition-colors">
+                    {item.sourceLabel}
+                    <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* --- WAITLIST SECTION --- */}
+      {/* ═══════════════════════ WAITLIST ═══════════════════════ */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-32">
         <WaitlistSection />
       </div>
