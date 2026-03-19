@@ -8,6 +8,7 @@ import {
   marketOpportunity,
   missionOutcomes,
   proofPoints,
+  sourcePartners,
   supportingSignals,
   valueStreams,
 } from '../content/site';
@@ -63,16 +64,22 @@ export default function HomePage() {
             </div>
 
             {/* Signup counter + data sources row */}
-            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/[0.08] pt-6 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
+            <div className="mt-12 flex flex-wrap items-start gap-x-8 gap-y-4 border-t border-white/[0.08] pt-6 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
               <SignupCounter />
               <div className="h-4 w-px bg-white/10 hidden sm:block" />
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/25">Data from</p>
-                {['World Bank', 'FAO', 'UNEP', 'IEA'].map(source => (
-                  <span key={source} className="text-[13px] font-medium text-white/25 hover:text-white/45 transition-colors duration-300 cursor-default">
-                    {source}
-                  </span>
-                ))}
+              <div className="flex-1">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30">Data from</p>
+                <div className="flex flex-wrap gap-3">
+                  {sourcePartners.map((source) => (
+                    <SourceLink
+                      key={source.name}
+                      name={source.name}
+                      monogram={source.monogram}
+                      href={source.href}
+                      accent={source.accent}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -274,5 +281,36 @@ export default function HomePage() {
       {/* ═══════════════════════ WAITLIST ═══════════════════════ */}
       <WaitlistSection />
     </>
+  );
+}
+
+function SourceLink({
+  name,
+  monogram,
+  href,
+  accent,
+}: {
+  name: string;
+  monogram: string;
+  href: string;
+  accent: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="group inline-flex items-center gap-3 rounded-full border border-white/12 bg-black/18 px-3 py-2 backdrop-blur-sm transition-all hover:border-white/22 hover:bg-black/26"
+    >
+      <span
+        className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${accent} text-[10px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_6px_18px_rgba(0,0,0,0.22)]`}
+      >
+        {monogram}
+      </span>
+      <span className="text-[12px] font-semibold text-white/72 transition-colors group-hover:text-white">
+        {name}
+      </span>
+      <span className="text-white/26 transition-colors group-hover:text-white/55">↗</span>
+    </a>
   );
 }

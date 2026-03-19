@@ -129,6 +129,46 @@ export const proofPoints = [
   },
 ] as const;
 
+export const sourcePartners = [
+  {
+    monogram: 'WB',
+    name: 'World Bank',
+    href: 'https://data.worldbank.org/indicator/NV.AGR.TOTL.CD',
+    accent: 'from-[#3056d3] to-[#5f87ff]',
+  },
+  {
+    monogram: 'FAO',
+    name: 'FAO',
+    href:
+      'https://www.fao.org/statistics/highlights-archive/highlights-detail/greenhouse-gas-emissions-from-agrifood-systems.-global--regional-and-country-trends--2001-2023/en',
+    accent: 'from-[#2f8f65] to-[#4fb88b]',
+  },
+  {
+    monogram: 'UN',
+    name: 'UNEP',
+    href: 'https://www.unep.org/resources/report/state-finance-nature-2026',
+    accent: 'from-[#2e6fa8] to-[#63a7df]',
+  },
+  {
+    monogram: 'IEA',
+    name: 'IEA',
+    href: 'https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai',
+    accent: 'from-[#7a4cff] to-[#a487ff]',
+  },
+  {
+    monogram: 'N',
+    name: 'Nature',
+    href: 'https://www.nature.com/articles/s44264-025-00118-5',
+    accent: 'from-[#1f1f1f] to-[#565656]',
+  },
+  {
+    monogram: 'US',
+    name: 'USGS',
+    href: 'https://www.usgs.gov/mission-areas/water-resources',
+    accent: 'from-[#9b6b27] to-[#d4a853]',
+  },
+] as const;
+
 export const marketOpportunity = [
   {
     value: '$9.7B',
