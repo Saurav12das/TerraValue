@@ -21,62 +21,80 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-[#0C0C0C]/90 backdrop-blur-xl border-b border-white/[0.06]'
+          ? 'bg-[#0C0C0C]/92 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.2)]'
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <span className="text-2xl font-bold tracking-tight text-white [font-family:var(--font-display)]">
-            {brand.name}
-          </span>
-        </Link>
+      <div className="mx-auto max-w-7xl px-6 pb-4 pt-3 lg:px-8">
+        <div className="hidden md:flex items-center justify-between border-b border-white/[0.08] pb-3">
+          <nav className="flex items-center gap-6 lg:gap-8">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+                    isActive ? 'text-white' : 'text-white/48 hover:text-white/82'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-[13px] font-medium tracking-wide transition-colors duration-200 ${
-                  isActive
-                    ? 'text-white'
-                    : 'text-white/50 hover:text-white/80'
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
           <Link
             href="/dashboard"
-            className="text-[13px] font-medium text-white/50 hover:text-white/80 transition-colors"
+            className="rounded-full bg-[#d47a34] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all hover:bg-[#e08843]"
           >
-            Demo
-          </Link>
-          <Link
-            href="/#waitlist"
-            className="rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-[#0C0C0C] transition-all hover:bg-white/90"
-          >
-            Get Access
+            Access
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-white/70 hover:text-white transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
-        </button>
+        <div className="relative flex items-center justify-between pt-4 md:pt-5">
+          <div className="hidden md:block w-36" />
+
+          <Link href="/" className="absolute left-1/2 hidden -translate-x-1/2 md:flex flex-col items-center text-center">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-emerald-200/62">
+              Living economy
+            </span>
+            <span className="mt-1 text-[2.2rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
+              {brand.name}
+            </span>
+            <span className="mt-2 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.24em] text-white/30">
+              <span className="h-px w-10 bg-white/16" />
+              Soil • Water • Value
+              <span className="h-px w-10 bg-white/16" />
+            </span>
+          </Link>
+
+          <Link href="/" className="md:hidden flex flex-col">
+            <span className="text-[1.75rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
+              {brand.name}
+            </span>
+            <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-white/40">
+              Soil • Water • Value
+            </span>
+          </Link>
+
+          <div className="hidden md:block ml-auto w-36 text-right">
+            <Link
+              href="/#waitlist"
+              className="inline-flex rounded-full border border-white/16 bg-white/6 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all hover:bg-white/12"
+            >
+              Get Access
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden ml-auto p-2 text-white/70 hover:text-white transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}
@@ -103,14 +121,14 @@ export function Navbar() {
             <Link
               href="/dashboard"
               onClick={() => setMobileOpen(false)}
-              className="text-center py-3 text-sm font-medium text-white/50 border border-white/10 rounded-lg"
+              className="text-center py-3 text-sm font-medium text-white border border-[#d47a34]/50 bg-[#d47a34] rounded-xl"
             >
-              Demo
+              Access
             </Link>
             <Link
               href="/#waitlist"
               onClick={() => setMobileOpen(false)}
-              className="text-center py-3 text-sm font-semibold text-[#0C0C0C] bg-white rounded-lg"
+              className="text-center py-3 text-sm font-semibold text-white border border-white/12 bg-white/6 rounded-xl"
             >
               Get Access
             </Link>
