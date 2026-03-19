@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { MissionSystemGraphic } from '../components/MissionSystemGraphic';
-import { Section } from '../components/Section';
 import { WaitlistSection } from '../components/WaitlistSection';
 import {
   brand,
   marketGaps,
   missionOutcomes,
-  missionPrinciples,
   proofPoints,
   supportingSignals,
   thesisPillars,
@@ -15,294 +13,246 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="space-y-10 lg:space-y-14">
-      <section className="relative overflow-hidden rounded-[2rem] border border-stone-300/70 bg-[linear-gradient(135deg,#1d3128_0%,#294339_44%,#5c7f64_100%)] px-6 py-8 text-white shadow-[0_30px_90px_rgba(20,36,31,0.2)] sm:px-10 sm:py-12 lg:px-14 lg:py-16">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,244,214,0.18),transparent_34%),radial-gradient(circle_at_85%_15%,rgba(118,184,154,0.24),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_50%)]" />
-        <div className="pointer-events-none absolute -left-10 top-10 h-32 w-32 rounded-full border border-white/10 bg-white/5 blur-2xl" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 translate-x-1/4 translate-y-1/4 rounded-full bg-[#d7f7d8]/10 blur-3xl" />
-
-        <div className="relative grid gap-8 lg:grid-cols-[1.35fr_0.85fr] lg:items-end">
-          <div>
-            <p className="inline-flex rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-stone-100/90">
-              TerraValue thesis
-            </p>
-            <h1 className="mt-5 max-w-4xl text-4xl leading-[0.98] tracking-tight text-balance text-white sm:text-5xl lg:text-[4.5rem] [font-family:var(--font-display)]">
-              {brand.headline}
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-stone-100/82 sm:text-lg">
-              {brand.subheadline}
-            </p>
-
-            <div className="mt-7 flex flex-wrap gap-2.5">
-              {['Community + science', 'Carbon + resilience', 'Water + intelligence'].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-stone-50/90 backdrop-blur-sm"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="#thesis"
-                className="rounded-full bg-[#f3e8c8] px-5 py-3 text-sm font-semibold text-stone-900 transition hover:bg-[#f7efd8]"
-              >
-                See the thesis
-              </Link>
-              <Link
-                href="/dashboard"
-                className="rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/16"
-              >
-                Explore prototype
-              </Link>
-              <Link
-                href="#waitlist"
-                className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-stone-100 transition hover:bg-white/10"
-              >
-                Talk to TerraValue
-              </Link>
-            </div>
-
-            <p className="mt-8 text-sm text-stone-100/60">{brand.tagline}</p>
+    <div className="space-y-24 lg:space-y-32">
+      {/* --- HERO SECTION --- */}
+      <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden rounded-[2.5rem] bg-[#021810] px-6 py-12 text-white shadow-2xl sm:px-10 lg:px-16 animate-fade-in-up">
+        <div className="pointer-events-none absolute inset-0 mesh-gradient-dark opacity-80" />
+        <div className="pointer-events-none absolute inset-0 dot-grid-dark opacity-30 mask-image:linear-gradient(to_bottom,white,transparent)" />
+        
+        {/* Glow Orbs */}
+        <div className="pointer-events-none absolute -left-20 top-0 h-64 w-64 rounded-full bg-emerald-500/10 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 rounded-full bg-sky-500/10 blur-[120px]" />
+        
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200 backdrop-blur-md animate-slide-up-fade">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            TerraValue Waitlist
           </div>
+          
+          <h1 className="mt-8 text-5xl leading-[1.05] tracking-tight text-white sm:text-7xl lg:text-[5.5rem] [font-family:var(--font-display)] animate-slide-up-fade" style={{ animationDelay: '100ms' }}>
+            Agriculture is where <span className="text-gradient">humanity</span>, <span className="text-gradient-warm">climate</span>, and intelligence converge.
+          </h1>
+          
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-emerald-100/70 sm:text-xl animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
+            {brand.subheadline}
+          </p>
 
-          <div className="rounded-[1.75rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.05))] p-5 backdrop-blur">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-100/70">A stronger front page</p>
-            <div className="mt-4 grid gap-3">
-              <InsightCard
-                title="For investors"
-                body="Frame TerraValue as a category-creation thesis, not just a prototype dashboard. The story becomes market infrastructure for unpriced ecosystem performance."
-              />
-              <InsightCard
-                title="For collaborators"
-                body="Invite growers, researchers, water experts, and data partners into a shared build, making the site feel like a platform in formation."
-              />
-              <InsightCard
-                title="For the brand"
-                body="Lead with conviction and care: TerraValue exists to serve farmers, strengthen communities, and make environmental value legible."
-              />
-            </div>
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
+             {/* Glow Input Waitlist CTA */}
+            <form className="relative flex w-full max-w-md items-center glow-border rounded-full bg-[#042f1f]/50 p-1 backdrop-blur-md transition-transform hover:scale-[1.02]">
+               <input 
+                 type="email" 
+                 placeholder="Enter your email to join the waitlist..." 
+                 className="w-full bg-transparent px-5 py-3 text-sm text-white placeholder:text-emerald-200/50 focus:outline-none"
+                 required
+               />
+               <button type="submit" className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-[#021810] transition-colors hover:bg-emerald-400">
+                 Request Access
+               </button>
+            </form>
+          </div>
+          
+          <div className="mt-16 flex flex-wrap justify-center gap-8 border-t border-emerald-500/10 pt-8 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
+             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-500/50 w-full mb-4">Backed by signals from</p>
+             {['World Bank', 'FAO', 'UNEP', 'IEA'].map(partner => (
+               <span key={partner} className="text-lg font-bold text-emerald-100/30 grayscale hover:grayscale-0 hover:text-emerald-200 transition-all duration-300">
+                 {partner}
+               </span>
+             ))}
           </div>
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
-        <div className="rounded-[2rem] border border-stone-200 bg-white/88 p-6 shadow-sm sm:p-8 lg:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-700">Mission before market</p>
-          <h2 className="mt-3 text-3xl leading-tight tracking-tight text-slate-950 sm:text-4xl [font-family:var(--font-display)]">
-            Investors should feel that the ambition is commercial, but the intent is deeply human.
-          </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            If this is a vision site, then we should say clearly that TerraValue is not trying to financialize land
-            from a distance. It is trying to build better intelligence for the people and ecosystems agriculture already
-            holds together.
-          </p>
+      {/* --- PROBLEM/SOLUTION SECTION (The Missing Market) --- */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+          <div className="animate-slide-in-left">
+            <p className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-800">
+              The Missing Market
+            </p>
+            <h2 className="mt-6 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
+              Today&rsquo;s tools price fragments. <br />
+              <span className="text-emerald-700">TerraValue prices systems.</span>
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-slate-600">
+              Most tools isolate one outcome—like carbon—while leaving water, biodiversity, resilience, and true operating performance off the balance sheet. 
+              We are turning scattered ecosystem outcomes into a unified decision, valuation, and finance layer.
+            </p>
+            <blockquote className="mt-8 border-l-4 border-emerald-500 bg-emerald-50/50 p-6 rounded-r-2xl italic text-slate-700">
+              "TerraValue helps markets understand what farms actually create."
+            </blockquote>
+          </div>
 
-          <div className="mt-7 grid gap-4">
-            {missionPrinciples.map((item) => (
+          <div className="grid gap-4 sm:grid-cols-2 stagger-children">
+            {marketGaps.map((item, idx) => (
               <article
                 key={item.title}
-                className="rounded-[1.35rem] border border-stone-200 bg-[linear-gradient(180deg,#ffffff_0%,#fbfcf8_100%)] p-5"
+                className="card-interactive glass rounded-[1.5rem] p-6 shadow-sm"
               >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-100 to-sky-50 text-emerald-600 font-bold mb-4">
+                  0{idx + 1}
+                </div>
                 <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{item.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <MissionSystemGraphic />
-          <div className="grid gap-3 sm:grid-cols-3">
-            {missionOutcomes.map((item) => (
-              <article key={item.title} className="rounded-[1.35rem] border border-stone-200 bg-white/82 p-4 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{item.title}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{item.body}</p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">{item.body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="thesis" className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm sm:p-8 lg:p-10">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-700">Bigger than agtech</p>
-          <h2 className="mt-3 text-3xl leading-tight tracking-tight text-slate-950 sm:text-4xl [font-family:var(--font-display)]">
-            Agriculture is not only a sector. It is a systems platform.
+      {/* --- PLATFORM VISION (What TerraValue Builds) BENTO GRID --- */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">What We Build</p>
+          <h2 className="mt-4 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
+            A valuation engine for the living economy.
           </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            The homepage should make this idea unavoidable. Instead of sounding like a pitch deck with product blocks,
-            TerraValue can feel like the beginning of a new market language for natural capital.
-          </p>
         </div>
-
-        <div className="mt-8 grid gap-4 lg:grid-cols-3">
-          {thesisPillars.map((pillar) => (
-            <article
-              key={pillar.title}
-              className={`rounded-[1.6rem] border border-stone-200 bg-gradient-to-br ${pillar.accent} p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]`}
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">{pillar.eyebrow}</p>
-              <h3 className="mt-4 text-2xl leading-tight text-slate-950 [font-family:var(--font-display)]">{pillar.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{pillar.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="rounded-[2rem] border border-stone-200 bg-[linear-gradient(180deg,#fff9ef_0%,#f8f2e4_100%)] p-6 shadow-sm sm:p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">The missing market</p>
-          <h2 className="mt-3 text-3xl leading-tight tracking-tight text-slate-950 sm:text-4xl [font-family:var(--font-display)]">
-            Today&rsquo;s tools price fragments. TerraValue should price systems.
-          </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            This is where the investor narrative gets stronger. The company is not only measuring sustainability. It is
-            turning scattered ecosystem outcomes into a decision, valuation, and finance layer.
-          </p>
-          <div className="mt-6 rounded-[1.4rem] border border-stone-300/70 bg-white/80 p-5">
-            <p className="text-sm font-semibold text-slate-900">The one-line positioning I would push harder:</p>
-            <p className="mt-3 text-2xl leading-tight text-slate-950 [font-family:var(--font-display)]">
-              TerraValue helps markets understand what farms actually create.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          {marketGaps.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)]"
-            >
-              <div className="h-10 w-10 rounded-2xl bg-[linear-gradient(135deg,#dcefdc,#edf4ff)]" />
-              <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <Section
-        title="What TerraValue Builds"
-        subtitle="A valuation engine for soil, water, biodiversity, resilience, and economics. This should read less like a feature checklist and more like a stack."
-      >
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {valueStreams.map((stream) => (
-            <article
-              key={stream.key}
-              className="rounded-[1.4rem] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-5"
-            >
-              <div
-                className="h-2 w-16 rounded-full"
-                style={{ backgroundColor: stream.color, opacity: 0.75 }}
-              />
-              <h3 className="mt-4 text-base font-semibold text-slate-900">{stream.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{stream.description}</p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <section className="rounded-[2rem] border border-slate-200 bg-[#111a16] p-6 text-white shadow-[0_24px_70px_rgba(17,26,22,0.22)] sm:p-8 lg:p-10">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200/70">Why now</p>
-            <h2 className="mt-3 text-3xl leading-tight tracking-tight text-white sm:text-4xl [font-family:var(--font-display)]">
-              The evidence can support the vision without making the page feel academic.
-            </h2>
-            <p className="mt-4 text-base leading-7 text-stone-200/78">
-              For this audience, I would avoid generic market-size filler. Better to show system-scale proof points and
-              then explain the knowledge gap TerraValue is trying to close.
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {proofPoints.map((item) => (
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 auto-rows-[220px]">
+          {valueStreams.map((stream, idx) => {
+             // Create bento box spanning rules
+             const isLarge = idx === 0 || idx === 3;
+             const spanClass = isLarge ? 'md:col-span-2 lg:col-span-3 lg:row-span-2' : 'md:col-span-1 lg:col-span-2 lg:row-span-1';
+             
+             return (
               <article
-                key={item.label}
-                className="rounded-[1.5rem] border border-white/10 bg-white/6 p-5 backdrop-blur-sm"
+                key={stream.key}
+                className={`group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:shadow-xl ${spanClass}`}
               >
-                <p className="text-3xl text-[#f3e8c8] [font-family:var(--font-display)]">{item.value}</p>
-                <h3 className="mt-2 text-base font-semibold text-white">{item.label}</h3>
-                <p className="mt-3 text-sm leading-6 text-stone-200/70">{item.detail}</p>
-                <a
-                  href={item.sourceHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/80 transition hover:text-emerald-100"
-                >
-                  {item.sourceLabel}
-                </a>
+                 <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                 
+                 <div className="relative z-10 flex flex-col h-full justify-between">
+                   <div className="flex items-center gap-4">
+                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl shadow-sm" style={{ backgroundColor: `${stream.color}20`, color: stream.color }}>
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                     </div>
+                     <h3 className="text-xl font-bold text-slate-900">{stream.title}</h3>
+                   </div>
+                   
+                   <p className="mt-6 text-sm leading-relaxed text-slate-600 max-w-sm">
+                     {stream.description}
+                   </p>
+                   
+                   <div className="mt-auto pt-6 flex w-full">
+                     <div className="h-1 rounded-full bar-fill w-8 group-hover:w-full" style={{ backgroundColor: stream.color }} />
+                   </div>
+                 </div>
               </article>
-            ))}
-          </div>
+             );
+          })}
         </div>
       </section>
 
-      <Section
-        title="Studies and Gaps Worth Surfacing"
-        subtitle="These signals strengthen the case that TerraValue is entering a large, under-built coordination problem."
-      >
-        <div className="grid gap-4 lg:grid-cols-2">
-          {supportingSignals.map((item) => (
+      {/* --- MISSION SYSTEM GRAPHIC & HUMAN ELEMENT --- */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+         <div className="rounded-[2.5rem] bg-[#021810] p-8 sm:p-14 lg:p-20 text-white relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-3xl opacity-30">
+               <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/20 to-transparent blur-[100px]" />
+            </div>
+            
+            <div className="grid gap-16 lg:grid-cols-[1fr_1fr] items-center relative z-10">
+               <div>
+                  <p className="inline-flex rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Mission before market</p>
+                  <h2 className="mt-6 text-4xl leading-tight tracking-tight sm:text-5xl [font-family:var(--font-display)]">
+                    Investors should feel that the ambition is commercial, but the intent is deeply human.
+                  </h2>
+                  <p className="mt-6 text-lg leading-relaxed text-emerald-100/70">
+                    TerraValue is not trying to financialize land from a distance. It is trying to build better intelligence for the people and ecosystems agriculture already holds together.
+                  </p>
+
+                  <div className="mt-10 grid gap-6">
+                    {missionOutcomes.map((item) => (
+                      <div key={item.title} className="flex gap-4">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-emerald-400 shrink-0" />
+                        <div>
+                           <h3 className="font-semibold text-white">{item.title}</h3>
+                           <p className="text-sm text-emerald-100/60 mt-1">{item.body}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+               </div>
+
+               <div>
+                 <MissionSystemGraphic />
+               </div>
+            </div>
+         </div>
+      </section>
+
+      {/* --- WHY NOW (Monolithic Stats) --- */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">The Scale of the Opportunity</p>
+          <h2 className="mt-4 text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl [font-family:var(--font-display)]">
+            A multi-trillion-dollar system waiting for infrastructure.
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 stagger-children">
+          {proofPoints.map((item) => (
             <article
-              key={item.title}
-              className="rounded-[1.45rem] border border-slate-200 bg-white p-5 shadow-[0_14px_35px_rgba(15,23,42,0.04)]"
+              key={item.label}
+              className="group flex flex-col justify-between rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:border-emerald-200 hover:shadow-xl hover:-translate-y-1"
             >
-              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{item.body}</p>
+              <div>
+                <p className="text-5xl font-bold text-slate-900 [font-family:var(--font-display)] tracking-tighter group-hover:text-emerald-700 transition-colors">{item.value}</p>
+                <h3 className="mt-4 text-base font-semibold text-slate-800">{item.label}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-500">{item.detail}</p>
+              </div>
               <a
                 href={item.sourceHref}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 inline-flex text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 transition hover:text-emerald-900"
+                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-emerald-600 hover:text-emerald-800 transition-colors"
               >
                 {item.sourceLabel}
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
               </a>
             </article>
           ))}
         </div>
-      </Section>
+      </section>
 
-      <section className="rounded-[2rem] border border-stone-300/70 bg-[linear-gradient(135deg,#fff9ef_0%,#f8fff7_55%,#eef7ff_100%)] p-6 shadow-sm sm:p-8 lg:p-10">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">How I would frame it</p>
-            <h2 className="mt-3 text-3xl leading-tight tracking-tight text-slate-950 sm:text-4xl [font-family:var(--font-display)]">
-              Keep the site visionary, but make the ask practical.
-            </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">
-              The creative move is to let the homepage act like a manifesto and a filter. It should immediately tell the
-              right people why this matters, what TerraValue is building, and where collaboration is needed next.
-            </p>
-          </div>
-
-          <div className="grid gap-3">
-            {[
-              'Investors should see a thesis about unpriced natural-capital infrastructure, not only a prototype product.',
-              'Researchers and pilot partners should see a real opening to shape the data, methods, and validation layer.',
-              'Future customers should feel that TerraValue understands both field reality and financial translation.',
-            ].map((line) => (
-              <div key={line} className="rounded-[1.35rem] border border-stone-200 bg-white/85 p-4 text-sm leading-7 text-slate-700">
-                {line}
+      {/* --- STUDIES AND GAPS --- */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-24">
+        <div className="rounded-[2.5rem] bg-slate-50 p-8 sm:p-12 lg:p-16 border border-slate-200">
+           <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
+              <div>
+                 <h2 className="text-3xl leading-tight tracking-tight text-slate-900 sm:text-4xl [font-family:var(--font-display)]">
+                   Signals of exactly this coordination problem.
+                 </h2>
+                 <p className="mt-4 text-slate-600 leading-relaxed">
+                    These signals strengthen the case that TerraValue is entering a large, under-built coordination problem.
+                 </p>
               </div>
-            ))}
-          </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                 {supportingSignals.map((item) => (
+                    <article key={item.title} className="glass rounded-[1.5rem] p-6">
+                       <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+                       <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.body}</p>
+                       <span className="mt-4 block text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
+                         {item.sourceLabel}
+                       </span>
+                    </article>
+                 ))}
+              </div>
+           </div>
         </div>
       </section>
 
-      <WaitlistSection />
+      {/* --- WAITLIST SECTION --- */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-32">
+        <WaitlistSection />
+      </div>
     </div>
-  );
-}
-
-function InsightCard({ title, body }: { title: string; body: string }) {
-  return (
-    <article className="rounded-[1.3rem] border border-white/10 bg-black/10 p-4">
-      <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-100/85">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-stone-100/72">{body}</p>
-    </article>
   );
 }
