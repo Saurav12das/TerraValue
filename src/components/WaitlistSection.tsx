@@ -1,22 +1,56 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { CheckIcon } from './Icons';
 
-type FormState = 'idle' | 'submitted';
+type FormState = 'idle' | 'submitting' | 'submitted' | 'error';
 
 function FormCard({
   title,
   description,
+  formType,
   fields,
   buttonLabel,
 }: {
   title: string;
   description: string;
-  fields: { placeholder: string; type?: string }[];
+  formType: 'waitlist' | 'partnership' | 'investor';
+  fields: { name: string; placeholder: string; type?: string }[];
   buttonLabel: string;
 }) {
   const [state, setState] = useState<FormState>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setState('submitting');
+    setErrorMsg('');
+
+    const formData = new FormData(e.currentTarget);
+    const fieldValues: Record<string, string> = {};
+    fields.forEach((f) => {
+      fieldValues[f.name] = formData.get(f.name) as string;
+    });
+
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: formType, fields: fieldValues }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setState('submitted');
+    } catch (err) {
+      setState('error');
+      setErrorMsg(err instanceof Error ? err.message : 'Please try again.');
+    }
+  }
 
   if (state === 'submitted') {
     return (
@@ -32,10 +66,8 @@ function FormCard({
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setState('submitted');
-      }}
+      ref={formRef}
+      onSubmit={handleSubmit}
       className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all hover:border-white/[0.1] hover:bg-white/[0.04]"
     >
       <h3 className="text-lg font-semibold text-white">{title}</h3>
@@ -43,7 +75,8 @@ function FormCard({
       <div className="mt-5 flex flex-col gap-3">
         {fields.map((f) => (
           <input
-            key={f.placeholder}
+            key={f.name}
+            name={f.name}
             type={f.type || 'text'}
             placeholder={f.placeholder}
             required
@@ -51,11 +84,17 @@ function FormCard({
           />
         ))}
       </div>
+
+      {state === 'error' && (
+        <p className="mt-3 text-sm text-red-400">{errorMsg}</p>
+      )}
+
       <button
         type="submit"
-        className="mt-5 w-full rounded-lg bg-white px-4 py-3 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90"
+        disabled={state === 'submitting'}
+        className="mt-5 w-full rounded-lg bg-white px-4 py-3 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {buttonLabel}
+        {state === 'submitting' ? 'Submitting...' : buttonLabel}
       </button>
     </form>
   );
@@ -81,37 +120,40 @@ export function WaitlistSection() {
           <FormCard
             title="Join the Waitlist"
             description="Stay close to the product as the platform takes shape."
+            formType="waitlist"
             fields={[
-              { placeholder: 'Full name' },
-              { placeholder: 'Email address', type: 'email' },
-              { placeholder: 'Role (farmer, researcher, etc.)' },
+              { name: 'name', placeholder: 'Full name' },
+              { name: 'email', placeholder: 'Email address', type: 'email' },
+              { name: 'role', placeholder: 'Role (farmer, researcher, etc.)' },
             ]}
             buttonLabel="Join Waitlist"
           />
           <FormCard
             title="Partnerships"
             description="Pilots, data integration, and strategic collaboration."
+            formType="partnership"
             fields={[
-              { placeholder: 'Organization name' },
-              { placeholder: 'Contact email', type: 'email' },
-              { placeholder: 'Area of focus' },
+              { name: 'organization', placeholder: 'Organization name' },
+              { name: 'email', placeholder: 'Contact email', type: 'email' },
+              { name: 'focus', placeholder: 'Area of focus' },
             ]}
             buttonLabel="Request Partnership"
           />
           <FormCard
             title="Investor Access"
             description="Talk about the market thesis and long-term opportunity."
+            formType="investor"
             fields={[
-              { placeholder: 'Fund / firm name' },
-              { placeholder: 'Contact email', type: 'email' },
-              { placeholder: 'Investment thesis / check size' },
+              { name: 'fund', placeholder: 'Fund / firm name' },
+              { name: 'email', placeholder: 'Contact email', type: 'email' },
+              { name: 'thesis', placeholder: 'Investment thesis / check size' },
             ]}
             buttonLabel="Connect with Founders"
           />
         </div>
 
         <p className="mt-12 text-center text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">
-          Prototype forms for early conversations
+          All submissions are securely stored
         </p>
       </div>
     </section>
