@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { WaitlistSection } from '../components/WaitlistSection';
+import { SignupCounter } from '../components/SignupCounter';
 import {
   brand,
   marketGaps,
@@ -15,73 +16,65 @@ export default function HomePage() {
   return (
     <>
       {/* ═══════════════════════ HERO ═══════════════════════ */}
-      <section className="relative min-h-screen flex items-center bg-[#0C0C0C] px-6 lg:px-8 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 dot-grid-dark opacity-30" />
-        <div className="pointer-events-none absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-[#3ECF8E]/[0.04] blur-[150px]" />
-        <div className="pointer-events-none absolute bottom-0 right-1/4 h-[400px] w-[400px] rounded-full bg-[#5BA3D9]/[0.03] blur-[120px]" />
+      <section className="relative min-h-screen flex items-end overflow-hidden">
+        {/* Full-bleed background image */}
+        <Image
+          src="/images/hero-farm.jpg"
+          alt="Watercolor illustration of a farm landscape with a tractor working in crop fields, representing the agriculture and natural capital that TerraValue measures"
+          fill
+          className="object-cover object-center"
+          priority
+        />
 
-        <div className="relative z-10 mx-auto max-w-7xl w-full pt-32 pb-16 lg:pb-24">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            {/* Left: Text */}
-            <div>
-              <p className="text-[13px] font-medium tracking-[0.2em] uppercase text-[#3ECF8E]/80 animate-slide-up-fade">
-                Natural Capital Infrastructure
-              </p>
+        {/* Dark overlay gradient — heavier at bottom for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/70 to-[#0C0C0C]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0C0C]/60 to-transparent" />
 
-              <h1 className="mt-8 text-[3rem] leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[4.5rem] [font-family:var(--font-display)] animate-slide-up-fade" style={{ animationDelay: '100ms' }}>
-                Every year, farms create{' '}
-                <span className="text-[#3ECF8E]">trillions</span> in value that no market can see.
-              </h1>
+        {/* Content */}
+        <div className="relative z-10 w-full px-6 lg:px-8 pb-16 pt-48 lg:pb-24 lg:pt-56">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-[13px] font-medium tracking-[0.2em] uppercase text-[#3ECF8E]/90 animate-slide-up-fade">
+              Natural Capital Infrastructure
+            </p>
 
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/50 animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
-                Soil carbon. Water quality and quantity. Biodiversity. Yield resilience.
-                Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
-              </p>
+            <h1 className="mt-6 max-w-4xl text-[3rem] leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[5rem] [font-family:var(--font-display)] animate-slide-up-fade" style={{ animationDelay: '100ms' }}>
+              Every year, farms create{' '}
+              <span className="text-[#3ECF8E]">trillions</span> in value that no market can see.
+            </h1>
 
-              <div className="mt-10 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
-                <Link
-                  href="/#waitlist"
-                  className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90 hover:scale-[1.02]"
-                >
-                  Get Early Access
-                </Link>
-                <Link
-                  href="#the-problem"
-                  className="rounded-full border border-white/15 px-8 py-3.5 text-sm font-medium text-white/60 transition hover:bg-white/5 hover:text-white/80"
-                >
-                  Learn more
-                </Link>
-              </div>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70 animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
+              Soil carbon. Water quality and quantity. Biodiversity. Yield resilience.
+              Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
+              <Link
+                href="/#waitlist"
+                className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90 hover:scale-[1.02]"
+              >
+                Get Early Access
+              </Link>
+              <Link
+                href="#the-problem"
+                className="rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-3.5 text-sm font-medium text-white/80 transition hover:bg-white/10"
+              >
+                Learn more
+              </Link>
             </div>
 
-            {/* Right: Hero Image */}
-            <div className="relative animate-slide-up-fade" style={{ animationDelay: '250ms' }}>
-              <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] shadow-2xl">
-                <Image
-                  src="/images/hero-farm.jpg"
-                  alt="Watercolor illustration of a farm landscape with a tractor working in crop fields, representing the agriculture and natural capital that TerraValue measures"
-                  width={800}
-                  height={560}
-                  className="w-full h-auto object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C]/40 via-transparent to-transparent" />
+            {/* Signup counter + data sources row */}
+            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/[0.08] pt-6 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
+              <SignupCounter />
+              <div className="h-4 w-px bg-white/10 hidden sm:block" />
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/25">Data from</p>
+                {['World Bank', 'FAO', 'UNEP', 'IEA'].map(source => (
+                  <span key={source} className="text-[13px] font-medium text-white/25 hover:text-white/45 transition-colors duration-300 cursor-default">
+                    {source}
+                  </span>
+                ))}
               </div>
-              {/* Caption */}
-              <p className="mt-3 text-[11px] text-white/20 text-center">
-                Every acre holds value that markets have never measured.
-              </p>
             </div>
-          </div>
-
-          {/* Data sources */}
-          <div className="mt-16 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/[0.06] pt-8 animate-slide-up-fade" style={{ animationDelay: '400ms' }}>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/20">Backed by data from</p>
-            {['World Bank', 'FAO', 'UNEP', 'IEA'].map(source => (
-              <span key={source} className="text-sm font-medium text-white/20 hover:text-white/40 transition-colors duration-300 cursor-default">
-                {source}
-              </span>
-            ))}
           </div>
         </div>
       </section>
