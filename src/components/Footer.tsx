@@ -1,15 +1,63 @@
-import { brand } from '../content/site';
+import Link from 'next/link';
+import { brand, navItems } from '../content/site';
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white/90">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
-        <div>
-          <h3 className="text-lg font-semibold text-emerald-900">{brand.name}</h3>
-          <p className="mt-2 text-sm text-slate-600">{brand.tagline}</p>
+    <footer className="border-t border-slate-200 bg-slate-50/80">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-4">
+          {/* Brand */}
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-700 to-teal-600">
+                <span className="text-xs font-black text-white">TV</span>
+              </div>
+              <span className="text-lg font-bold text-slate-900">{brand.name}</span>
+            </div>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-500">
+              {brand.tagline}
+            </p>
+            <p className="mt-4 text-sm text-slate-400">
+              Building the financial and decision infrastructure for natural capital —
+              from soil carbon to water quality to biodiversity and beyond.
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-400">Platform</h4>
+            <nav className="mt-3 flex flex-col gap-2">
+              {navItems.map((item) => (
+                <Link key={item.href} href={item.href} className="text-sm text-slate-600 hover:text-emerald-700 transition-colors">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-400">Connect</h4>
+            <div className="mt-3 flex flex-col gap-2 text-sm text-slate-600">
+              <span>General: hello@terravalue.io</span>
+              <span>Partnerships: partners@terravalue.io</span>
+              <span>Investors: capital@terravalue.io</span>
+              <Link href="/#waitlist" className="mt-1 font-medium text-emerald-700 hover:text-emerald-800">
+                Join the Waitlist &rarr;
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="text-sm text-slate-600">Partnerships: partners@terravalue.io</div>
-        <div className="text-sm text-slate-600">Investor relations: capital@terravalue.io</div>
+
+        {/* Bottom bar */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 sm:flex-row">
+          <p className="text-xs text-slate-400">
+            &copy; {new Date().getFullYear()} TerraValue. All rights reserved.
+          </p>
+          <p className="text-xs text-slate-400">
+            Financial and decision infrastructure for natural capital in agriculture.
+          </p>
+        </div>
       </div>
     </footer>
   );
