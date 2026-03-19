@@ -3,6 +3,7 @@ import { WaitlistSection } from '../components/WaitlistSection';
 import {
   brand,
   marketGaps,
+  marketOpportunity,
   missionOutcomes,
   proofPoints,
   supportingSignals,
@@ -29,7 +30,7 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/50 sm:text-xl animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
-            Soil health. Water filtration. Carbon sequestration. Biodiversity. Resilience.
+            Soil carbon. Water quality and quantity. Biodiversity. Yield resilience.
             Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
           </p>
 
@@ -111,7 +112,7 @@ export default function HomePage() {
               One platform to measure, value, and unlock what farms actually produce.
             </h2>
             <p className="mt-4 text-base text-[#6B6B6B] leading-relaxed">
-              Five integrated layers. Each one solves a piece of the problem that no existing tool touches.
+              Six integrated layers — including both water quality and water quantity. Each one solves a piece of the problem that no existing tool touches.
             </p>
           </div>
 
@@ -183,6 +184,45 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════ MARKET OPPORTUNITY ═══════════════════════ */}
+      <section className="bg-[#FAFAF8] py-24 lg:py-32 px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl mb-16">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D4A853]">The opportunity</p>
+            <h2 className="mt-5 text-4xl leading-[1.08] tracking-tight text-[#1A1A1A] sm:text-[3.25rem] [font-family:var(--font-display)]">
+              A massive, untapped market waiting for infrastructure.
+            </h2>
+            <p className="mt-4 text-base text-[#6B6B6B] leading-relaxed">
+              Carbon credits, water trading, biodiversity contracts, regenerative finance — the markets are forming, but the measurement and valuation layer is missing. That is what TerraValue builds.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 stagger-children">
+            {marketOpportunity.map((item) => (
+              <article
+                key={item.label}
+                className="group flex flex-col justify-between rounded-xl border border-[#E8E6E1] bg-white p-7 transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+              >
+                <div>
+                  <p className="text-3xl font-bold text-[#1A1A1A] [font-family:var(--font-display)] tracking-tight group-hover:text-[#3ECF8E] transition-colors">{item.value}</p>
+                  <h3 className="mt-3 text-[13px] font-semibold text-[#1A1A1A] leading-snug">{item.label}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">{item.detail}</p>
+                </div>
+                <a
+                  href={item.sourceHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#3ECF8E] hover:text-[#2A9D6A] transition-colors"
+                >
+                  {item.sourceLabel}
+                  <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              </article>
+            ))}
           </div>
         </div>
       </section>

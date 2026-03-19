@@ -28,7 +28,7 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <span className="text-xl font-semibold tracking-tight text-white [font-family:var(--font-display)]">
+          <span className="text-2xl font-bold tracking-tight text-white [font-family:var(--font-display)]">
             {brand.name}
           </span>
         </Link>
