@@ -54,7 +54,7 @@ export function Navbar() {
 
           <div className="hidden md:block w-28 text-right">
             <Link
-              href="/dashboard"
+              href="/#waitlist"
               className="inline-flex rounded-full bg-[#d47a34] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all hover:bg-[#e08843]"
             >
               Access
@@ -110,7 +110,7 @@ export function Navbar() {
           </nav>
           <div className="mt-6 flex flex-col gap-3">
             <Link
-              href="/dashboard"
+              href="/#waitlist"
               onClick={() => setMobileOpen(false)}
               className="text-center py-3 text-sm font-medium text-white border border-[#d47a34]/50 bg-[#d47a34] rounded-xl"
             >
