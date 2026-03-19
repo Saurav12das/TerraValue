@@ -19,8 +19,8 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-end overflow-hidden">
         {/* Full-bleed background image */}
         <Image
-          src="/images/hero-farm.jpg"
-          alt="Watercolor illustration of a farm landscape with a tractor working in crop fields, representing the agriculture and natural capital that TerraValue measures"
+          src="/hero-landscape-watercolor.png"
+          alt="Watercolor illustration of a working farm landscape with a tractor, crop rows, and mountains behind the land"
           fill
           className="object-cover object-center"
           priority
