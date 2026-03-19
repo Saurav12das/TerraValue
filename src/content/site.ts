@@ -79,7 +79,7 @@ export const marketGaps = [
   {
     title: 'Water is treated like a constraint, not an asset.',
     body:
-      'Agriculture sits at the center of water allocation, yet few platforms translate water performance into strategic, finance-ready intelligence.',
+      'Agriculture uses 70% of freshwater globally, yet no platform measures both water quality impact and quantity efficiency as a unified, finance-ready signal.',
   },
   {
     title: 'Biodiversity evidence is still fragmented.',
@@ -129,6 +129,41 @@ export const proofPoints = [
   },
 ] as const;
 
+export const marketOpportunity = [
+  {
+    value: '$9.7B',
+    label: 'Agriculture carbon credit market in 2026',
+    detail:
+      'The carbon credit market for agriculture, forestry, and land use is projected to reach $26.35 billion by 2030, growing at 28.5% CAGR — yet soil carbon credits remain under-verified and under-traded.',
+    sourceLabel: 'The Business Research Company, 2026',
+    sourceHref: 'https://www.thebusinessresearchcompany.com/report/carbon-credit-for-agriculture-forestry-and-land-use-global-market-report',
+  },
+  {
+    value: '$20.7B',
+    label: 'Regenerative agriculture market by 2031',
+    detail:
+      'Growing at 14.5% CAGR driven by corporate net-zero pledges, climate-smart policy, and rising demand for practices that restore soil health and biodiversity.',
+    sourceLabel: 'Mordor Intelligence, 2025',
+    sourceHref: 'https://www.mordorintelligence.com/industry-reports/regenerative-agriculture-market',
+  },
+  {
+    value: '< 2%',
+    label: 'of farm ecosystem value is currently monetized',
+    detail:
+      'US farmland generates an estimated $125 billion+ in annual ecosystem services, but less than 2% is captured through carbon or environmental markets. The infrastructure to unlock the other 98% does not yet exist.',
+    sourceLabel: 'USDA Office of Environmental Markets',
+    sourceHref: 'https://www.usda.gov/about-usda/general-information/staff-offices/office-chief-economist/office-energy-and-environmental-policy/environmental-markets',
+  },
+  {
+    value: '$23B',
+    label: 'water trading market projected by 2033',
+    detail:
+      'Water quality and nutrient credit trading is growing at 9.8% CAGR. Agriculture — the largest water user on earth — is only beginning to participate in these markets.',
+    sourceLabel: 'Zion Market Research, 2024',
+    sourceHref: 'https://www.zionmarketresearch.com/report/water-trading-market',
+  },
+] as const;
+
 export const supportingSignals = [
   {
     title: 'The hidden-value argument is already mainstreaming',
@@ -159,6 +194,20 @@ export const supportingSignals = [
     sourceLabel: 'IEA Energy and AI, April 2025',
     sourceHref: 'https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai',
   },
+  {
+    title: 'Carbon credit integrity is finally maturing',
+    body:
+      'Companies retired more credits in H1 2025 than any previous period, and $10 billion was committed to new credit generation — 3x 2024 levels. But agriculture-specific credits remain under-verified.',
+    sourceLabel: 'Carbon Direct, 2026',
+    sourceHref: 'https://www.carbon-direct.com/insights/key-trends-2026-voluntary-carbon-market',
+  },
+  {
+    title: 'Water scarcity is becoming a farm economics issue',
+    body:
+      'The Ogallala Aquifer — irrigating 30% of US cropland — is declining in many regions with no replenishment timeline. Water quantity intelligence is becoming as critical as water quality measurement.',
+    sourceLabel: 'USGS Water Resources',
+    sourceHref: 'https://www.usgs.gov/mission-areas/water-resources',
+  },
 ] as const;
 
 export const valueStreams = [
@@ -170,11 +219,18 @@ export const valueStreams = [
     color: '#7d5d41',
   },
   {
-    key: 'water',
+    key: 'water-quality',
     title: 'Water Quality',
     description: 'Quantify nitrate reduction, phosphorus runoff control, and watershed-level water quality improvements.',
     icon: 'water',
     color: '#0ea5e9',
+  },
+  {
+    key: 'water-quantity',
+    title: 'Water Quantity',
+    description: 'Track irrigation efficiency, groundwater recharge, aquifer sustainability, and water use optimization across farm operations.',
+    icon: 'water',
+    color: '#3B82F6',
   },
   {
     key: 'biodiversity',
