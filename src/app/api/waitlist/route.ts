@@ -1,35 +1,58 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import {
+  emptySubmissionCounts,
+  getSubmissionCounts,
+  insertSubmission,
+  submissionTypes,
+  type SubmissionType,
+} from '../../../lib/waitlist';
+import {
+  getSupabaseConfigError,
+  isSupabaseConfigured,
+} from '../../../lib/supabase/server';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'submissions.json');
-
-type Submission = {
-  id: string;
-  type: 'waitlist' | 'partnership' | 'investor';
-  fields: Record<string, string>;
-  submittedAt: string;
-  ip?: string;
+type SubmissionBody = {
+  type?: string;
+  fields?: Record<string, unknown>;
 };
 
-async function readSubmissions(): Promise<Submission[]> {
-  try {
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
+function normalizeFields(fields: Record<string, unknown>) {
+  return Object.entries(fields).reduce<Record<string, string>>((acc, [key, value]) => {
+    if (typeof value !== 'string') {
+      return acc;
+    }
+
+    const normalizedKey = key.trim();
+    const normalizedValue = value.trim();
+
+    if (!normalizedKey || !normalizedValue) {
+      return acc;
+    }
+
+    acc[normalizedKey] = normalizedValue;
+    return acc;
+  }, {});
 }
 
-async function writeSubmissions(submissions: Submission[]): Promise<void> {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
-  await fs.writeFile(DATA_FILE, JSON.stringify(submissions, null, 2), 'utf-8');
+function getClientIp(request: NextRequest) {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0]?.trim() ?? null;
+  }
+
+  return request.headers.get('x-real-ip');
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json(
+        { error: getSupabaseConfigError() },
+        { status: 500 }
+      );
+    }
 
+    const body = (await request.json()) as SubmissionBody;
     const { type, fields } = body;
 
     if (!type || !fields) {
@@ -39,16 +62,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const validTypes = ['waitlist', 'partnership', 'investor'];
-    if (!validTypes.includes(type)) {
+    if (
+      typeof fields !== 'object' ||
+      Array.isArray(fields) ||
+      !submissionTypes.includes(type as SubmissionType)
+    ) {
       return NextResponse.json(
-        { error: `Invalid type. Must be one of: ${validTypes.join(', ')}` },
+        { error: `Invalid type. Must be one of: ${submissionTypes.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    const normalizedFields = normalizeFields(fields);
+
+    if (Object.keys(normalizedFields).length === 0) {
+      return NextResponse.json(
+        { error: 'Please complete the form before submitting.' },
         { status: 400 }
       );
     }
 
     // Basic email validation if email field exists
-    const emailField = Object.entries(fields).find(
+    const emailField = Object.entries(normalizedFields).find(
       ([key]) => key.toLowerCase().includes('email')
     );
     if (emailField) {
@@ -61,24 +96,26 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const submission: Submission = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      type,
-      fields,
-      submittedAt: new Date().toISOString(),
-    };
-
-    const submissions = await readSubmissions();
-    submissions.push(submission);
-    await writeSubmissions(submissions);
+    const id = await insertSubmission({
+      type: type as SubmissionType,
+      fields: normalizedFields,
+      ipAddress: getClientIp(request),
+    });
 
     return NextResponse.json(
-      { success: true, id: submission.id },
+      { success: true, id },
       { status: 201 }
     );
-  } catch {
+  } catch (error) {
+    console.error('Waitlist submission failed', error);
+
     return NextResponse.json(
-      { error: 'Something went wrong. Please try again.' },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Something went wrong. Please try again.',
+      },
       { status: 500 }
     );
   }
@@ -86,19 +123,27 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const submissions = await readSubmissions();
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({
+        ...emptySubmissionCounts(),
+        configured: false,
+      });
+    }
+
+    const counts = await getSubmissionCounts();
+
     return NextResponse.json({
-      total: submissions.length,
-      byType: {
-        waitlist: submissions.filter(s => s.type === 'waitlist').length,
-        partnership: submissions.filter(s => s.type === 'partnership').length,
-        investor: submissions.filter(s => s.type === 'investor').length,
-      },
-      submissions,
+      ...counts,
+      configured: true,
     });
-  } catch {
+  } catch (error) {
+    console.error('Waitlist count lookup failed', error);
+
     return NextResponse.json(
-      { error: 'Could not read submissions' },
+      {
+        error:
+          error instanceof Error ? error.message : 'Could not read submissions',
+      },
       { status: 500 }
     );
   }

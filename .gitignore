@@ -3,6 +3,9 @@ node_modules
 out
 .DS_Store
 npm-debug.log*
+.env
+.env.local
+.env.*.local
 
 # User submission data (keep private)
 data/submissions.json

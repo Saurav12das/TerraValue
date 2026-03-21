@@ -6,6 +6,22 @@ import { SignupCounter } from './SignupCounter';
 
 type FormState = 'idle' | 'submitting' | 'submitted' | 'error';
 
+async function readErrorMessage(response: Response) {
+  const fallback = 'Something went wrong. Please try again.';
+  const responseText = await response.text();
+
+  if (!responseText) {
+    return fallback;
+  }
+
+  try {
+    const parsed = JSON.parse(responseText) as { error?: string; message?: string };
+    return parsed.error || parsed.message || responseText || fallback;
+  } catch {
+    return responseText || fallback;
+  }
+}
+
 function FormCard({
   title,
   description,
@@ -42,8 +58,7 @@ function FormCard({
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Something went wrong');
+        throw new Error(await readErrorMessage(res));
       }
 
       setState('submitted');

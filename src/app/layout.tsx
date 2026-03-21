@@ -1,7 +1,20 @@
 import type { Metadata } from 'next';
+import { Instrument_Sans, Newsreader } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+
+const instrumentSans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'TerraValue — Natural Capital Infrastructure for Agriculture',
@@ -23,15 +36,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      className={`${instrumentSans.variable} ${newsreader.variable} scroll-smooth`}
+    >
       <body className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">

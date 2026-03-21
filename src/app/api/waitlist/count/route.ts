@@ -1,22 +1,37 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'submissions.json');
+import { emptySubmissionCounts, getSubmissionCounts } from '../../../../lib/waitlist';
+import {
+  getSupabaseDiagnostics,
+  isSupabaseConfigured,
+} from '../../../../lib/supabase/server';
 
 export async function GET() {
+  const diagnostics = getSupabaseDiagnostics();
+
   try {
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    const submissions = JSON.parse(data);
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({
+        ...emptySubmissionCounts(),
+        configured: false,
+        diagnostics,
+      });
+    }
+
+    const counts = await getSubmissionCounts();
     return NextResponse.json({
-      total: submissions.length,
-      byType: {
-        waitlist: submissions.filter((s: { type: string }) => s.type === 'waitlist').length,
-        partnership: submissions.filter((s: { type: string }) => s.type === 'partnership').length,
-        investor: submissions.filter((s: { type: string }) => s.type === 'investor').length,
-      },
+      ...counts,
+      configured: true,
+      diagnostics,
     });
-  } catch {
-    return NextResponse.json({ total: 0, byType: { waitlist: 0, partnership: 0, investor: 0 } });
+  } catch (error) {
+    console.error('Waitlist count lookup failed', error);
+
+    return NextResponse.json({
+      ...emptySubmissionCounts(),
+      configured: true,
+      diagnostics,
+      error:
+        error instanceof Error ? error.message : 'Could not load waitlist counts',
+    });
   }
 }
