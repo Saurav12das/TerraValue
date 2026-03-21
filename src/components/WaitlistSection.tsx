@@ -118,7 +118,7 @@ function FormCard({
 
 export function WaitlistSection() {
   return (
-    <section id="waitlist" className="bg-[#0C0C0C] py-24 lg:py-32 px-6 lg:px-8">
+    <section id="waitlist" className="scroll-mt-32 bg-[#0C0C0C] py-24 lg:py-32 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3ECF8E]/60">
