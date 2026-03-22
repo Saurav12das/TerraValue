@@ -2,6 +2,50 @@
 
 type IconProps = { className?: string; size?: number };
 
+/**
+ * TerraValue leaf-hexagon logomark.
+ * A hexagonal frame with leaf-vein geometry inside —
+ * the hexagon suggests infrastructure, the veins represent natural capital.
+ */
+export function TerraValueLogo({ className = '', size = 36 }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Hexagon outline */}
+      <polygon
+        points="50,3 93,28 93,72 50,97 7,72 7,28"
+        stroke="currentColor"
+        strokeWidth="5"
+        fill="none"
+        strokeLinejoin="round"
+      />
+      {/* Central vein (stem) */}
+      <line
+        x1="50" y1="88" x2="50" y2="18"
+        stroke="currentColor"
+        strokeWidth="4.5"
+        strokeLinecap="round"
+      />
+      {/* Left veins — angled lines from center stem outward-left */}
+      <line x1="50" y1="35" x2="22" y2="22" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="50" x2="16" y2="42" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="65" x2="15" y2="60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="78" x2="22" y2="78" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      {/* Right veins — angled lines from center stem outward-right */}
+      <line x1="50" y1="35" x2="78" y2="22" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="50" x2="84" y2="42" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="65" x2="85" y2="60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="78" x2="78" y2="78" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function CarbonIcon({ className = '', size = 24 }: IconProps) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { navItems, brand } from '../content/site';
-import { MenuIcon, CloseIcon } from './Icons';
+import { MenuIcon, CloseIcon, TerraValueLogo } from './Icons';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -53,6 +53,7 @@ export function Navbar() {
           <div className="hidden md:block w-28" />
 
           <Link href="/" className="mx-auto hidden md:flex flex-col items-center text-center">
+            <TerraValueLogo size={38} className="text-[#3ECF8E] mb-1" />
             <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-emerald-200/62">
               Living economy
             </span>
@@ -66,13 +67,16 @@ export function Navbar() {
             </span>
           </Link>
 
-          <Link href="/" className="md:hidden flex flex-col">
-            <span className="text-[1.75rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
-              {brand.name}
-            </span>
-            <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-white/40">
-              Soil • Water • Value
-            </span>
+          <Link href="/" className="md:hidden flex items-center gap-3">
+            <TerraValueLogo size={30} className="text-[#3ECF8E] shrink-0" />
+            <div className="flex flex-col">
+              <span className="text-[1.75rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
+                {brand.name}
+              </span>
+              <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-white/40">
+                Soil • Water • Value
+              </span>
+            </div>
           </Link>
 
           <div className="hidden md:block w-28 text-right">
