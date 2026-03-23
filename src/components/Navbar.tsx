@@ -54,12 +54,17 @@ export function Navbar() {
           {/* Logo — left-aligned, prominent brand name with "Living Economy" as a subtle badge */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
             <TerraValueLogo size={30} className="text-[#3ECF8E] transition-transform group-hover:scale-110" />
-            <div className="flex items-baseline gap-2">
-              <span className="text-[1.6rem] leading-none tracking-[-0.04em] text-white [font-family:var(--font-display)] font-bold">
-                {brand.name}
-              </span>
-              <span className="hidden sm:inline-flex text-[9px] font-semibold uppercase tracking-[0.22em] text-emerald-400/50 border-l border-white/10 pl-2">
-                Living Economy
+            <div className="flex flex-col">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[1.6rem] leading-none tracking-[-0.04em] text-white [font-family:var(--font-display)] font-bold">
+                  {brand.name}
+                </span>
+                <span className="hidden sm:inline-flex text-[9px] font-semibold uppercase tracking-[0.22em] text-emerald-400/50 border-l border-white/10 pl-2">
+                  Living Economy
+                </span>
+              </div>
+              <span className="mt-0.5 text-[8px] font-semibold uppercase tracking-[0.2em] text-white/25">
+                Soil &middot; Water &middot; Biodiversity
               </span>
             </div>
           </Link>
@@ -72,7 +77,7 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+                  className={`text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
                     isActive ? 'text-white' : 'text-white/48 hover:text-white/82'
                   }`}
                 >
