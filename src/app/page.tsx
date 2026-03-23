@@ -48,12 +48,27 @@ export default function HomePage() {
               Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
+            {/* Farmer-centric value hook */}
+            <div className="mt-6 inline-flex items-center gap-3 rounded-xl border border-[#3ECF8E]/20 bg-[#3ECF8E]/10 backdrop-blur-sm px-5 py-3 animate-slide-up-fade" style={{ animationDelay: '280ms' }}>
+              <span className="text-3xl font-extrabold text-[#3ECF8E] tabular-nums [font-family:var(--font-display)]">$482</span>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-white/90">per acre / year</p>
+                <p className="text-xs text-white/50">Average ecosystem value you could unlock</p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '350ms' }}>
               <Link
                 href="/#waitlist"
                 className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90 hover:scale-[1.02]"
               >
                 Get Early Access
+              </Link>
+              <Link
+                href="/dashboard"
+                className="rounded-full border border-[#3ECF8E]/30 bg-[#3ECF8E]/10 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-[#3ECF8E] transition-all hover:bg-[#3ECF8E]/20"
+              >
+                Try the Dashboard
               </Link>
               <Link
                 href="#the-problem"

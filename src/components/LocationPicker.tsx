@@ -68,13 +68,16 @@ export function LocationPicker({ value, onChange }: Props) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-1">
-        <svg className="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <svg className="h-4 w-4 text-sky-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z" />
         </svg>
-        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">Location</h3>
+        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">
+          Location
+          <span className="text-slate-300 font-normal ml-1.5">(recommended)</span>
+        </h3>
       </div>
-      <p className="text-[11px] text-slate-400 mb-3">Location provides soil layer data and weather normals.</p>
+      <p className="text-[11px] text-slate-400 mb-3">Unlocks soil carbon, water quality &amp; quantity predictions with real climate and soil data.</p>
 
       {/* Mode toggle */}
       <div className="flex rounded-lg bg-slate-100 p-0.5 mb-3">

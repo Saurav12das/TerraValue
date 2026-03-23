@@ -13,14 +13,30 @@ export function PredictionPanel({ result }: Props) {
 
   if (!result) {
     return (
-      <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/50 p-8 text-center">
-        <svg className="mx-auto h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z" />
-        </svg>
-        <p className="mt-3 text-sm font-medium text-slate-500">Select a location to generate predictions</p>
-        <p className="mt-1 text-xs text-slate-400">
-          Choose a state or enter coordinates to unlock soil carbon, water quality, and water quantity predictions.
+      <div className="rounded-2xl border border-dashed border-slate-300 bg-gradient-to-br from-slate-50 to-slate-100/50 p-12 text-center">
+        <div className="mx-auto h-16 w-16 rounded-full bg-sky-100 flex items-center justify-center mb-4">
+          <svg className="h-8 w-8 text-sky-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z" />
+          </svg>
+        </div>
+        <h3 className="text-sm font-semibold text-slate-900">Add a Location for Enhanced Predictions</h3>
+        <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
+          Select a state or enter coordinates in the sidebar to unlock soil carbon sequestration, water quality, and water quantity predictions powered by location-specific climate and soil data.
+        </p>
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          <div className="flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-[11px] text-amber-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />Soil Carbon
+          </div>
+          <div className="flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-[11px] text-sky-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-500" />Water Quality
+          </div>
+          <div className="flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1 text-[11px] text-teal-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-teal-500" />Water Quantity
+          </div>
+        </div>
+        <p className="mt-4 text-[11px] text-slate-400">
+          Supports all US states &middot; Coordinate entry (lat 24-49, lon -125 to -66)
         </p>
       </div>
     );
@@ -233,29 +249,31 @@ function PredictionCard({
         <p className="mt-1 text-[10px] text-slate-500 font-medium">{scoreLabel(score)}</p>
       </div>
 
-      <div className="p-4">
-        <div className="space-y-1.5">
-          {metrics.map((m) => (
-            <div key={m.label} className="flex items-center justify-between">
-              <span className="text-xs text-slate-500">{m.label}</span>
-              <span className={`text-xs font-bold tabular-nums ${m.highlight ? c.light : 'text-slate-800'}`}>
-                {m.value}
-              </span>
-            </div>
-          ))}
-        </div>
+      {/* Metrics grid */}
+      <div className="p-4 grid grid-cols-2 gap-2">
+        {metrics.slice(0, 6).map((m) => (
+          <div key={m.label} className="rounded-lg border border-slate-100 bg-slate-50/50 p-2.5">
+            <p className="text-[10px] font-medium text-slate-500 truncate">{m.label}</p>
+            <p className={`text-xs font-bold mt-0.5 tabular-nums ${m.highlight ? c.light : 'text-slate-900'}`}>
+              {m.value}
+            </p>
+          </div>
+        ))}
+      </div>
 
+      {/* Drivers toggle */}
+      <div className="px-4 pb-4">
         <button
           onClick={onToggle}
-          className={`mt-3 text-[11px] font-semibold ${c.light} hover:underline`}
+          className={`text-[11px] font-semibold flex items-center gap-1 ${c.light} hover:underline`}
         >
-          {expanded ? 'Hide' : 'Show'} drivers
+          {expanded ? '\u2715 Hide' : '+ Show'} drivers
         </button>
 
         {expanded && (
-          <ul className="mt-2 space-y-1.5 animate-slide-up-fade">
+          <ul className="mt-2.5 space-y-1.5 animate-slide-up-fade border-t border-slate-100 pt-2.5">
             {drivers.map((d, i) => (
-              <li key={i} className="flex gap-1.5 text-[11px] text-slate-500">
+              <li key={i} className="flex gap-2 text-[11px] text-slate-600">
                 <span className={`mt-1 h-1.5 w-1.5 rounded-full ${c.dot} flex-shrink-0`} />
                 {d}
               </li>

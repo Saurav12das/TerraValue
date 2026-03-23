@@ -79,13 +79,13 @@ export function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden md:block w-28 text-right">
+          <div className="hidden md:block w-36 text-right">
             <Link
               href="/#waitlist"
               onClick={handleAccessClick}
-              className="inline-flex rounded-full bg-[#d47a34] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all hover:bg-[#e08843]"
+              className="inline-flex flex-col items-center rounded-full bg-[#d47a34] px-5 py-2 text-white transition-all hover:bg-[#e08843] hover:scale-[1.03]"
             >
-              Access
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em]">Get Early Access</span>
             </Link>
           </div>
 
