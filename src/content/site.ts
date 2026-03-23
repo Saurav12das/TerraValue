@@ -257,20 +257,41 @@ export const valueStreams = [
     description: 'Measure soil organic carbon stocks, sequestration rates, and climate mitigation potential from management changes.',
     icon: 'carbon',
     color: '#7d5d41',
+    metrics: [
+      { label: 'Sequestration potential', value: '0.5–1.5', unit: 't CO₂/ha/yr' },
+      { label: 'Global soil carbon stock', value: '2,500', unit: 'Gt C in top 2m' },
+      { label: 'Voluntary carbon price', value: '$5–50', unit: 'per tonne CO₂e' },
+      { label: 'US farmland carbon value', value: '$8B+', unit: 'potential/yr' },
+    ],
+    source: 'IPCC, Lal 2004, Ecosystem Marketplace 2024',
   },
   {
     key: 'water-quality',
     title: 'Water Quality',
     description: 'Quantify nitrate reduction, phosphorus runoff control, and watershed-level water quality improvements.',
-    icon: 'water',
+    icon: 'water-quality',
     color: '#0ea5e9',
+    metrics: [
+      { label: 'Filtration value', value: '$30–95', unit: 'per acre/yr' },
+      { label: 'Nitrate reduction (cover crops)', value: '25–50', unit: '% decrease' },
+      { label: 'Nutrient credit price', value: '$5–25', unit: 'per lb N removed' },
+      { label: 'US clean water cost saved', value: '$4B+', unit: 'annual potential' },
+    ],
+    source: 'USDA ERS, Chesapeake Bay Program, EPA',
   },
   {
     key: 'water-quantity',
     title: 'Water Quantity',
     description: 'Track irrigation efficiency, groundwater recharge, aquifer sustainability, and water use optimization across farm operations.',
-    icon: 'water',
+    icon: 'water-quantity',
     color: '#3B82F6',
+    metrics: [
+      { label: 'Ag share of freshwater use', value: '70', unit: '% globally' },
+      { label: 'Soil water holding gain', value: '+20,000', unit: 'gal/acre per 1% OM' },
+      { label: 'Irrigation efficiency gap', value: '40–60', unit: '% water wasted' },
+      { label: 'Water trading market (2033)', value: '$23B', unit: 'projected' },
+    ],
+    source: 'FAO, USDA NRCS, Zion Market Research',
   },
   {
     key: 'biodiversity',
@@ -278,6 +299,13 @@ export const valueStreams = [
     description: 'Assess habitat quality, pollinator support, and landscape-level biodiversity outcomes across farm systems.',
     icon: 'biodiversity',
     color: '#22c55e',
+    metrics: [
+      { label: 'Pollination service value', value: '$235–577B', unit: 'global/yr' },
+      { label: 'Species on biodiverse farms', value: '3–5×', unit: 'vs conventional' },
+      { label: 'Biodiversity credit pilot price', value: '$10–40', unit: 'per unit/yr' },
+      { label: 'Pest control value', value: '$100+', unit: 'per acre/yr' },
+    ],
+    source: 'IPBES, FAO, TEEB',
   },
   {
     key: 'resilience',
@@ -285,6 +313,13 @@ export const valueStreams = [
     description: 'Evaluate crop stability under weather stress, soil health buffering, and long-term productivity trends.',
     icon: 'resilience',
     color: '#f59e0b',
+    metrics: [
+      { label: 'Drought yield advantage', value: '+15–25', unit: '% in regen systems' },
+      { label: 'Yield stability improvement', value: '20–40', unit: '% less variance' },
+      { label: 'Soil health ROI timeline', value: '3–5', unit: 'years to break even' },
+      { label: 'Climate risk reduction', value: '$50–120', unit: 'per acre/yr' },
+    ],
+    source: 'Rodale Institute, LaCanne & Lundgren 2018',
   },
   {
     key: 'economics',
@@ -292,6 +327,13 @@ export const valueStreams = [
     description: 'Model input efficiency, ecosystem service revenue potential, and total return on sustainable practices.',
     icon: 'economics',
     color: '#8b5cf6',
+    metrics: [
+      { label: 'Ecosystem services (US farms)', value: '$125B+', unit: 'annual total' },
+      { label: 'Currently monetized', value: '< 2', unit: '% of value' },
+      { label: 'Input cost reduction (regen)', value: '15–30', unit: '% savings' },
+      { label: 'Stacked revenue potential', value: '$150–500', unit: 'per acre/yr' },
+    ],
+    source: 'USDA OEM, Soil Health Institute',
   },
 ];
 

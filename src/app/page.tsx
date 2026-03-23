@@ -10,8 +10,8 @@ import {
   proofPoints,
   sourcePartners,
   supportingSignals,
-  valueStreams,
 } from '../content/site';
+import { ValueStreamCards } from '../components/ValueStreamCards';
 
 export default function HomePage() {
   return (
@@ -158,29 +158,11 @@ export default function HomePage() {
               One platform to measure, value, and unlock what farms actually produce.
             </h2>
             <p className="mt-4 text-base text-[#6B6B6B] leading-relaxed">
-              Six integrated layers — including both water quality and water quantity. Each one solves a piece of the problem that no existing tool touches.
+              Six integrated layers — including both water quality and water quantity. Each one solves a piece of the problem that no existing tool touches. <span className="text-[#3ECF8E] font-medium">Click any card to see real data.</span>
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E8E6E1]/60 rounded-2xl overflow-hidden border border-[#E8E6E1]">
-            {valueStreams.map((stream) => (
-              <article
-                key={stream.key}
-                className="group bg-white p-8 transition-all hover:bg-[#FAFAF8]"
-              >
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-2 w-2 rounded-full" style={{ backgroundColor: stream.color }} />
-                  <h3 className="text-base font-semibold text-[#1A1A1A]">{stream.title}</h3>
-                </div>
-
-                <p className="text-sm leading-relaxed text-[#6B6B6B]">{stream.description}</p>
-
-                <div className="mt-6 h-px bg-[#E8E6E1] overflow-hidden">
-                  <div className="h-full w-0 group-hover:w-full transition-all duration-700" style={{ backgroundColor: stream.color }} />
-                </div>
-              </article>
-            ))}
-          </div>
+          <ValueStreamCards />
         </div>
       </section>
 
