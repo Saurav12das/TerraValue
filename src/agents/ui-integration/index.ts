@@ -63,7 +63,7 @@ export function runPredictionPipeline(
   if (soilCarbon.annualSequestrationRate > 0) {
     summaryParts.push(
       `This management approach is projected to sequester ${soilCarbon.annualSequestrationRate} tonnes C/ha/yr (${soilCarbon.co2EquivalentPerYear} t CO₂e), ` +
-      `worth an estimated $${soilCarbon.carbonCreditValue}/ha/yr in carbon credits.`
+      `worth an estimated ${soilCarbon.carbonCreditValue} USD/ha/yr in carbon credits.`
     );
   } else {
     summaryParts.push(

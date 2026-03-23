@@ -227,8 +227,11 @@ export function DashboardClient() {
             </div>
             <div className="text-right">
               <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Est. Ecosystem Value</p>
-              <p className="mt-2 text-4xl font-extrabold text-slate-600 tabular-nums">${result.ecosystemValuePotentialUsdAcre}</p>
-              <p className="mt-1 text-sm text-slate-400">per acre / year</p>
+              <div className="mt-2 flex items-baseline gap-1.5 justify-end">
+                <span className="text-3xl font-extrabold text-slate-600 tabular-nums">{result.ecosystemValuePotentialUsdAcre}</span>
+                <span className="text-sm text-slate-400">USD/acre/yr</span>
+              </div>
+              <p className="mt-1 text-xs text-slate-400">Combined carbon, water, biodiversity, resilience</p>
             </div>
           </div>
         </div>
@@ -315,11 +318,13 @@ export function DashboardClient() {
           />
         </div>
 
-        {/* Sub-score Cards */}
+        {/* Sub-score Cards with top impact factor */}
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {dimensionMeta.map((d) => {
             const score = result[d.key];
             const diff = compareResult ? score - compareResult[d.key] : null;
+            // Show the top contributing factor from details
+            const topDriver = result.details[d.key]?.[0];
             return (
               <div key={d.key} className="card-hover rounded-xl border border-slate-200 bg-white p-3.5 group">
                 <div className="flex items-center gap-1.5 text-slate-400 group-hover:text-slate-600 transition-colors">
@@ -342,6 +347,11 @@ export function DashboardClient() {
                   />
                 </div>
                 <p className="mt-1 text-[9px] text-slate-400 font-medium">{scoreLabel(score)}</p>
+                {topDriver && (
+                  <p className="mt-1.5 text-[9px] text-slate-400 leading-tight font-mono truncate" title={topDriver}>
+                    {topDriver}
+                  </p>
+                )}
               </div>
             );
           })}
@@ -384,7 +394,7 @@ export function DashboardClient() {
                       style={{ width: `${s.terraValueScore}%` }}
                     />
                   </div>
-                  <p className="mt-1.5 text-xs text-slate-400 tabular-nums">${s.ecosystemValuePotentialUsdAcre}/ac/yr</p>
+                  <p className="mt-1.5 text-xs text-slate-400 tabular-nums">{s.ecosystemValuePotentialUsdAcre} USD/ac/yr</p>
                   {isActive && <p className="mt-1 text-[10px] font-semibold text-emerald-600">Currently viewing</p>}
                 </div>
               );
@@ -601,7 +611,7 @@ function MonetizationPanel({ result }: { result: ReturnType<typeof scoreScenario
                 <div className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
                 <span className="text-sm text-slate-600">{item.label}</span>
               </div>
-              <span className="text-sm font-bold text-slate-900 tabular-nums">${item.value}/ac</span>
+              <span className="text-sm font-bold text-slate-900 tabular-nums">{item.value} <span className="text-[10px] font-normal text-slate-400">USD/ac</span></span>
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
               <div
@@ -613,7 +623,7 @@ function MonetizationPanel({ result }: { result: ReturnType<typeof scoreScenario
         ))}
         <div className="border-t border-slate-200 pt-3.5 flex items-center justify-between">
           <span className="text-sm font-bold text-slate-900">Total Potential</span>
-          <span className="text-xl font-extrabold text-emerald-700 tabular-nums">${result.monetization.total}/ac</span>
+          <span className="text-xl font-extrabold text-emerald-700 tabular-nums">{result.monetization.total} <span className="text-sm font-normal text-slate-400">USD/ac</span></span>
         </div>
       </div>
     </div>
@@ -626,8 +636,8 @@ function ValuationPanel({ result }: { result: ReturnType<typeof scoreScenario> }
       <h3 className="text-sm font-bold text-slate-900">Summary Valuation</h3>
       <div className="flex-1 flex flex-col items-center justify-center py-6">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Combined Ecosystem Value</p>
-        <p className="mt-3 text-6xl font-extrabold text-emerald-700 tabular-nums">${result.ecosystemValuePotentialUsdAcre}</p>
-        <p className="mt-1 text-sm text-slate-400">per acre / year</p>
+        <p className="mt-3 text-5xl font-extrabold text-emerald-700 tabular-nums">{result.ecosystemValuePotentialUsdAcre}</p>
+        <p className="mt-1 text-sm text-slate-400">USD per acre / year</p>
         <div className="mt-5 flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-1.5">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse-soft" />
           <span className="text-xs font-medium text-emerald-700">Demo estimate — placeholder model</span>

@@ -49,11 +49,17 @@ export default function HomePage() {
             </p>
 
             {/* Farmer-centric value hook */}
-            <div className="mt-6 inline-flex items-center gap-3 rounded-xl border border-[#3ECF8E]/20 bg-[#3ECF8E]/10 backdrop-blur-sm px-5 py-3 animate-slide-up-fade" style={{ animationDelay: '280ms' }}>
-              <span className="text-3xl font-extrabold text-[#3ECF8E] tabular-nums [font-family:var(--font-display)]">$482</span>
-              <div className="text-left">
-                <p className="text-sm font-semibold text-white/90">per acre / year</p>
-                <p className="text-xs text-white/50">Average ecosystem value you could unlock</p>
+            <div className="mt-6 inline-flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm px-5 py-3 animate-slide-up-fade" style={{ animationDelay: '280ms' }}>
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#3ECF8E] tabular-nums [font-family:var(--font-display)]">482</span>
+                  <span className="text-[9px] font-semibold uppercase tracking-widest text-white/40">USD / acre / yr</span>
+                </div>
+                <div className="h-8 w-px bg-white/10" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white/80">Average ecosystem value waiting to be unlocked</p>
+                  <p className="text-xs text-white/40">Carbon + Water + Biodiversity + Resilience</p>
+                </div>
               </div>
             </div>
 

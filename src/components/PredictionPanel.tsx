@@ -91,7 +91,7 @@ export function PredictionPanel({ result }: Props) {
             { label: '10-yr projection', value: `${soilCarbon.projectedStock10yr} t C/ha` },
             { label: 'Sequestration rate', value: `${soilCarbon.annualSequestrationRate} t C/ha/yr`, highlight: soilCarbon.annualSequestrationRate > 0 },
             { label: 'CO₂ equivalent', value: `${soilCarbon.co2EquivalentPerYear} t CO₂e/yr` },
-            { label: 'Carbon credit value', value: `$${soilCarbon.carbonCreditValue}/ha/yr`, highlight: true },
+            { label: 'Carbon credit value', value: `${soilCarbon.carbonCreditValue} USD/ha/yr`, highlight: true },
             { label: 'Confidence', value: `${Math.round(soilCarbon.confidence * 100)}%` },
           ]}
           drivers={soilCarbon.drivers}
@@ -111,7 +111,7 @@ export function PredictionPanel({ result }: Props) {
             { label: 'P runoff risk', value: `${waterQuality.phosphorusRunoffRisk}/100`, highlight: waterQuality.phosphorusRunoffRisk > 50 },
             { label: 'Sediment loss', value: `${waterQuality.sedimentLoss} t/ha/yr` },
             { label: 'Nutrient reduction', value: `${waterQuality.nutrientReductionPct}%` },
-            { label: 'Payment potential', value: `$${waterQuality.paymentPotential}/ha/yr`, highlight: true },
+            { label: 'Payment potential', value: `${waterQuality.paymentPotential} USD/ha/yr`, highlight: true },
           ]}
           drivers={waterQuality.drivers}
           color="sky"

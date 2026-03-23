@@ -33,7 +33,7 @@ export function Navbar() {
       return;
     }
 
-    const headerOffset = 128;
+    const headerOffset = 80;
     const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
 
     window.history.replaceState(null, '', '/#waitlist');
@@ -48,71 +48,59 @@ export function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 pb-4 pt-3 lg:px-8">
-        <div className="relative flex items-start justify-between">
-          <div className="hidden md:block w-28" />
-
-          <Link href="/" className="mx-auto hidden md:flex flex-col items-center text-center">
-            <TerraValueLogo size={38} className="text-[#3ECF8E] mb-1" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-emerald-200/62">
-              Living economy
-            </span>
-            <span className="mt-1 text-[2.2rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
-              {brand.name}
-            </span>
-            <span className="mt-2 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.24em] text-white/30">
-              <span className="h-px w-10 bg-white/16" />
-              Soil • Water • Value
-              <span className="h-px w-10 bg-white/16" />
-            </span>
-          </Link>
-
-          <Link href="/" className="md:hidden flex items-center gap-3">
-            <TerraValueLogo size={30} className="text-[#3ECF8E] shrink-0" />
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Single-row horizontal layout */}
+        <div className="flex items-center justify-between h-16">
+          {/* Logo — left-aligned, compact horizontal */}
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <TerraValueLogo size={28} className="text-[#3ECF8E]" />
             <div className="flex flex-col">
-              <span className="text-[1.75rem] leading-none tracking-[-0.05em] text-white [font-family:var(--font-display)]">
+              <span className="text-xl leading-none tracking-[-0.04em] text-white [font-family:var(--font-display)]">
                 {brand.name}
               </span>
-              <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-white/40">
-                Soil • Water • Value
+              <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-white/30">
+                Soil &middot; Water &middot; Value
               </span>
             </div>
           </Link>
 
-          <div className="hidden md:block w-36 text-right">
+          {/* Desktop nav links — center */}
+          <nav className="hidden md:flex items-center gap-6">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+                    isActive ? 'text-white' : 'text-white/48 hover:text-white/82'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Desktop CTA — right */}
+          <div className="hidden md:block">
             <Link
               href="/#waitlist"
               onClick={handleAccessClick}
-              className="inline-flex flex-col items-center rounded-full bg-[#d47a34] px-5 py-2 text-white transition-all hover:bg-[#e08843] hover:scale-[1.03]"
+              className="inline-flex rounded-full bg-[#d47a34] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-all hover:bg-[#e08843] hover:scale-[1.03]"
             >
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em]">Get Early Access</span>
+              Get Early Access
             </Link>
           </div>
 
+          {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden ml-auto p-2 text-white/70 hover:text-white transition-colors"
+            className="md:hidden p-2 text-white/70 hover:text-white transition-colors"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
           </button>
-        </div>
-
-        <div className="hidden md:flex items-center justify-center gap-6 border-t border-white/[0.08] pt-4 mt-4">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
-                  isActive ? 'text-white' : 'text-white/48 hover:text-white/82'
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
         </div>
       </div>
 
@@ -142,7 +130,7 @@ export function Navbar() {
               onClick={handleAccessClick}
               className="text-center py-3 text-sm font-medium text-white border border-[#d47a34]/50 bg-[#d47a34] rounded-xl"
             >
-              Access
+              Get Early Access
             </Link>
           </div>
         </div>
