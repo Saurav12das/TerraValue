@@ -48,12 +48,33 @@ export default function HomePage() {
               Farmers produce all of it. Markets price none of it. We&rsquo;re building the infrastructure to change that.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '300ms' }}>
+            {/* Farmer-centric value hook */}
+            <div className="mt-6 inline-flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm px-5 py-3 animate-slide-up-fade" style={{ animationDelay: '280ms' }}>
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-[#3ECF8E] tabular-nums [font-family:var(--font-display)]">482</span>
+                  <span className="text-[9px] font-semibold uppercase tracking-widest text-white/40">USD / acre / yr</span>
+                </div>
+                <div className="h-8 w-px bg-white/10" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white/80">Average ecosystem value waiting to be unlocked</p>
+                  <p className="text-xs text-white/40">Carbon + Water + Biodiversity + Resilience</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-start gap-4 animate-slide-up-fade" style={{ animationDelay: '350ms' }}>
               <Link
                 href="/#waitlist"
                 className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-[#0C0C0C] transition-all hover:bg-white/90 hover:scale-[1.02]"
               >
                 Get Early Access
+              </Link>
+              <Link
+                href="/dashboard"
+                className="rounded-full border border-[#3ECF8E]/30 bg-[#3ECF8E]/10 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-[#3ECF8E] transition-all hover:bg-[#3ECF8E]/20"
+              >
+                Try the Dashboard
               </Link>
               <Link
                 href="#the-problem"

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Instrument_Sans, Newsreader } from 'next/font/google';
+import { Instrument_Sans, Neuton } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
@@ -10,8 +10,9 @@ const instrumentSans = Instrument_Sans({
   display: 'swap',
 });
 
-const newsreader = Newsreader({
+const neuton = Neuton({
   subsets: ['latin'],
+  weight: ['200', '300', '400', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 });
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${instrumentSans.variable} ${newsreader.variable} scroll-smooth`}
+      className={`${instrumentSans.variable} ${neuton.variable} scroll-smooth`}
     >
       <body className="min-h-screen flex flex-col">
         <Navbar />
