@@ -15,6 +15,10 @@ import { RadarChart } from './RadarChart';
 import { ProgressRing } from './ProgressRing';
 import { Tabs } from './Tabs';
 import { CarbonIcon, WaterIcon, BiodiversityIcon, ResilienceIcon, EconomicsIcon } from './Icons';
+import { LocationPicker } from './LocationPicker';
+import { PredictionPanel } from './PredictionPanel';
+import { LocationInput, PredictionResult } from '../agents/types';
+import { runPredictionPipeline } from '../agents/ui-integration';
 
 const dimensionMeta = [
   { key: 'carbon' as const, label: 'Soil Carbon', icon: <CarbonIcon size={18} />, color: '#7d5d41' },
@@ -28,8 +32,15 @@ export function DashboardClient() {
   const [input, setInput] = useState<ScenarioInput>(presetScenarios[1]);
   const [compareIdx, setCompareIdx] = useState<number | null>(null);
   const [activeDetailTab, setActiveDetailTab] = useState<string>('radar');
+  const [location, setLocation] = useState<LocationInput>({});
 
   const result = useMemo(() => scoreScenario(input), [input]);
+
+  // Run prediction pipeline when location is set
+  const predictionResult = useMemo<PredictionResult | null>(() => {
+    if (!location.region && !location.coordinates) return null;
+    return runPredictionPipeline(location, input);
+  }, [location, input]);
   const compareResult = useMemo(
     () => (compareIdx !== null ? scoreScenario(presetScenarios[compareIdx]) : null),
     [compareIdx]
@@ -125,6 +136,9 @@ export function DashboardClient() {
             <span className="text-sm font-medium text-slate-700">Irrigated</span>
           </label>
         </div>
+
+        {/* Location */}
+        <LocationPicker value={location} onChange={setLocation} />
 
         {/* Compare */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -260,6 +274,17 @@ export function DashboardClient() {
 
         {/* Score Details */}
         <ScoreDetails result={result} />
+
+        {/* Model-Enhanced Predictions (from agents) */}
+        <div>
+          <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <svg className="h-4 w-4 text-sky-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+            </svg>
+            Location-Aware Predictions
+          </h3>
+          <PredictionPanel result={predictionResult} />
+        </div>
 
         {/* Monetization + Valuation */}
         <div className="grid gap-4 md:grid-cols-2">
