@@ -123,8 +123,8 @@ export default function ProductPage() {
                         <ProgressRing value={76} label="TerraValue Score" sublabel="Weighted composite" color="#2A9D6A" size={120} />
                         <div className="flex flex-col items-center justify-center">
                           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9A9A9A]">Est. Value</p>
-                          <p className="mt-1 text-4xl font-bold text-[#1A1A1A] [font-family:var(--font-display)]">$482</p>
-                          <p className="text-xs text-[#9A9A9A]">per acre / year</p>
+                          <p className="mt-1 text-4xl font-bold text-[#1A1A1A] [font-family:var(--font-display)]">482</p>
+                          <p className="text-xs text-[#9A9A9A]">USD / acre / year</p>
                         </div>
                       </div>
                     </div>

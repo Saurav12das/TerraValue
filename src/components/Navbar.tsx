@@ -51,15 +51,15 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Single-row horizontal layout */}
         <div className="flex items-center justify-between h-16">
-          {/* Logo — left-aligned, compact horizontal */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <TerraValueLogo size={28} className="text-[#3ECF8E]" />
-            <div className="flex flex-col">
-              <span className="text-xl leading-none tracking-[-0.04em] text-white [font-family:var(--font-display)]">
+          {/* Logo — left-aligned, prominent brand name with "Living Economy" as a subtle badge */}
+          <Link href="/" className="flex items-center gap-3 shrink-0 group">
+            <TerraValueLogo size={30} className="text-[#3ECF8E] transition-transform group-hover:scale-110" />
+            <div className="flex items-baseline gap-2">
+              <span className="text-[1.6rem] leading-none tracking-[-0.04em] text-white [font-family:var(--font-display)] font-bold">
                 {brand.name}
               </span>
-              <span className="text-[8px] font-semibold uppercase tracking-[0.2em] text-white/30">
-                Soil &middot; Water &middot; Value
+              <span className="hidden sm:inline-flex text-[9px] font-semibold uppercase tracking-[0.22em] text-emerald-400/50 border-l border-white/10 pl-2">
+                Living Economy
               </span>
             </div>
           </Link>
